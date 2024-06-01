@@ -8,11 +8,11 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 const Banner = () => {
 
 
-    const backgroundImageUrl1 = "https://i.ibb.co/93YRDhR/photo-1499914485622-a88fac536970-q-80-w-2070-auto-format-fit-crop-ixlib-rb-4-0.jpg";
+    const backgroundImageUrl1 = "https://i.ibb.co/zZN064Z/photo-1610552254576-9500a3e99999-q-80-w-1434-auto-format-fit-crop-ixlib-rb-4-0.jpg";
 
-    const backgroundImageUrl2 = "https://i.ibb.co/wKyhsPK/photo-1515378791036-0648a3ef77b2-q-80-w-2070-auto-format-fit-crop-ixlib-rb-4-0.jpg";
+    const backgroundImageUrl2 = "https://i.ibb.co/KVtrH6r/photo-1488190211105-8b0e65b80b4e-q-80-w-1470-auto-format-fit-crop-ixlib-rb-4-0.jpg";
 
-    const backgroundImageUrl3 = "https://i.ibb.co/6JsKFhp/photo-1629904853716-f0bc54eea481-q-80-w-2070-auto-format-fit-crop-ixlib-rb-4-0.jpg";
+    const backgroundImageUrl3 = "https://i.ibb.co/m9nfMvS/photo-1629360021730-3d258452c425-q-80-w-1470-auto-format-fit-crop-ixlib-rb-4-0.jpg";
 
 
 
@@ -47,7 +47,7 @@ const Banner = () => {
             >
 
                 <SwiperSlide>
-                    <div style={backgroud1} className='brightness-[85%] bg-no-repeat bg-cover bg-center lg:h-[600px] '>
+                    <div style={backgroud1} className='brightness-[85%] bg-no-repeat bg-cover bg-center lg:h-[650px] '>
                         {
                           
                         }
@@ -56,7 +56,7 @@ const Banner = () => {
                 </SwiperSlide>
 
                 <SwiperSlide>
-                    <div style={backgroud2} className=' brightness-[85%] bg-no-repeat bg-cover bg-center lg:h-[600px]'>
+                    <div style={backgroud2} className=' brightness-[85%] bg-no-repeat bg-cover bg-center lg:h-[650px]'>
                         {
                             
                         }
@@ -64,7 +64,7 @@ const Banner = () => {
                 </SwiperSlide>
 
                 <SwiperSlide>
-                    <div style={backgroud3} className='brightness-[85%] bg-no-repeat bg-cover bg-center lg:h-[600px]'>
+                    <div style={backgroud3} className='brightness-[85%] bg-no-repeat bg-cover bg-center lg:h-[650px]'>
                         {
                             
                         }

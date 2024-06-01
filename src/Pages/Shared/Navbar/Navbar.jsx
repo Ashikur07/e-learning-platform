@@ -45,13 +45,13 @@ const Navbar = () => {
     const links = (
         <>
             <li className="font-semibold mr-1"><NavLink to='/'>Home</NavLink></li>
-            <li className="font-semibold mr-1"><NavLink to='/allJobs'>All Classes</NavLink></li>
+            <li className="font-semibold mr-1"><NavLink to='/allclasses'>All Classes</NavLink></li>
             <li className="font-semibold mr-1"><NavLink to='/teaching'>Teach on LearnQuest</NavLink></li>
         </>
     );
 
     return (
-        <div className="navbar lg:px-[5%] shadow-xl">
+        <div className="navbar lg:px-[5%] shadow-xl bg-base-200">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden" onClick={handleDropdownToggle}>
@@ -94,7 +94,7 @@ const Navbar = () => {
                             <div className=" -left-20 lg:-left-12 top-12 lg:top-[59px] menu dropdown-content z-[10]  bg-slate-600 rounded-lg text-white w-36 p-4 space-y-3">
                                 <p>{user?.displayName}</p>
                                 <div className="space-y-3">
-                                    <button className="bg-slate-800 py-2 px-3 rounded-md font-semibold w-full"><Link to='/profile'>Dashboard</Link></button><br />
+                                    <button className="bg-slate-800 py-2 px-3 rounded-md font-semibold w-full"><Link to='/dashboard'>Dashboard</Link></button><br />
                                     <button onClick={handleLogOut} className="bg-slate-800 w-full py-2 px-3 rounded-md font-semibold">Logout</button>
                                 </div>
                             </div>

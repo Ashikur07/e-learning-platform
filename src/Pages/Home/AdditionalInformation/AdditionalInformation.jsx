@@ -3,7 +3,7 @@ import { IoBookmarksSharp } from "react-icons/io5";
 
 const AdditionalInformation = () => {
     return (
-        <div className="flex ">
+        <div className="flex mt-20">
 
             <div className="flex-1 bg-slate-500">
                 <div className="flex justify-center pt-40 gap-6">
