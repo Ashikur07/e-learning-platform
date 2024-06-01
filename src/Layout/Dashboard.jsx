@@ -8,8 +8,8 @@ import { MdBookmarkAdd } from "react-icons/md";
 
 const Dashboard = () => {
     const student = false;
-    const admin = false;
-    const teacher = true;
+    const admin = true;
+    const teacher = false;
     const { user } = useAuth();
 
     return (

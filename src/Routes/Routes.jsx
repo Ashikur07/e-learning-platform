@@ -7,6 +7,7 @@ import Teaching from "../Pages/Teaching/Teaching";
 import AllClasses from "../Pages/AllClasses/AllClasses";
 import Dashboard from "../Layout/Dashboard";
 import Profile from "../components/Profile/Profile";
+import TeacherRequest from "../Pages/Dashboard/Admin/TeacherRequest/TeacherRequest";
 
 const router = createBrowserRouter([
     {
@@ -43,6 +44,12 @@ const router = createBrowserRouter([
             {
                 path: 'profile',
                 element:<Profile></Profile>
+            },
+
+            // for admin route
+            {
+                path: 'teacherRequest',
+                element: <TeacherRequest></TeacherRequest>
             }
         ]
     }

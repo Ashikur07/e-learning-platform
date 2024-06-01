@@ -1,13 +1,14 @@
 import useAuth from "../../hooks/useAuth";
+import Heading from "../Heading/Heading";
 
 const Profile = () => {
     const { user } = useAuth();
 
     return (
-        <div>
-            <div className="bg-slate-600 text-center">
-                <h1 className="text-5xl font-semibold text-white uppercase p-5">Profile</h1>
-            </div>
+        <div>      
+            {
+                <Heading title="PROFILE"></Heading>
+            }
 
             {/* details */}
             <div className="flex gap-16 justify-center items-center bg-slate-600 mt-32 p-10 max-w-2xl mx-auto">
