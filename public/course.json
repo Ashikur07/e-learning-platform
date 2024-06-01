@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "image": "https://i.ibb.co/N9bcgmw/Rectangle-2749.png",
+        "title": "Product Management Basic-Course",
+        "description": "Product Management Masterclass, you will learn with Sarah Johnson - Head of Product Customer Platform Gojek Indonesia.",
+        "enrol_date": "1-28 june 2024",
+        "price": 380
+    },
+    {
+        "id": 2,
+        "image": "https://i.ibb.co/VVs3xk6/Rectangle-2749-1.png",
+        "title": "BM Data Science Professional Certificate",
+        "description": "Product Management Masterclass, you will learn with Sarah Johnson - Head of Product Customer Platform Gojek Indonesia.",
+        "enrol_date": "5-28 june 2024",
+        "price": 678
+    },
+    {
+        "id": 3,
+        "image": "https://i.ibb.co/LQjrFd3/Rectangle-2749-2.png",
+        "title": "Introduction to Machine Learning",
+        "description": "Product Management Masterclass, you will learn with Sarah Johnson - Head of Product Customer Platform Gojek Indonesia, covering essential skills.",
+        "enrol_date": "4-20 june 2024",
+        "price": 123
+    },
+    {
+        "id": 4,
+        "image": "https://i.ibb.co/S5k7Ft0/Rectangle-2749-3.png",
+        "title": "Python for Everybody Specialization",
+        "description": "Product Management Masterclass, you will learn with Sarah Johnson - Head of Product Customer Platform Gojek Indonesia.",
+        "enrol_date": "1-28 june 2024",
+        "price": 567
+    }
+]
