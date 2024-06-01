@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWith
 import app from "../firebase/firebase.config";
 
 
+
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
@@ -13,12 +14,6 @@ const AuthProvider = ({ children }) => {
 
     // Create user by google
     const createUserWithGoogle = (Provider) => {
-        return signInWithPopup(auth, Provider);
-        setLoading(true);
-    }
-
-    // Create user by github
-    const createUserWithGitHub = (Provider) => {
         return signInWithPopup(auth, Provider);
         setLoading(true);
     }
@@ -59,7 +54,6 @@ const AuthProvider = ({ children }) => {
         logOut,
         user,
         createUserWithGoogle,
-        createUserWithGitHub,
         createNewUser,
         signInUser,
         loading,
