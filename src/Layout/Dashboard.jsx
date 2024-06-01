@@ -1,12 +1,15 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { FaEnvelope, FaList, FaUtensils } from "react-icons/fa6";
+import { FaEnvelope, FaList, FaUsers, } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
-import { IoBookmarksSharp } from "react-icons/io5";
+import { IoBookmarksSharp, IoPersonAdd } from "react-icons/io5";
+import { MdBookmarkAdd } from "react-icons/md";
+
 
 const Dashboard = () => {
     const student = false;
-    const admin = true;
+    const admin = false;
+    const teacher = true;
     const { user } = useAuth();
 
     return (
@@ -21,7 +24,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <h1 className="text-2xl font-bold">{user?.displayName}</h1>
-                    <p className="text-lg">{user.email}</p>
+                    <p className="text-lg">{user?.email}</p>
                 </div>
                 <div className="divider"></div>
 
@@ -61,8 +64,45 @@ const Dashboard = () => {
                             </li>
                             <li>
                                 <NavLink to='/dashboard/teacherRequest'>
-                                    <IoBookmarksSharp />
+                                    <IoPersonAdd />
                                     Teacher Request</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to='/dashboard/users'>
+                                    <FaUsers />
+                                    Users</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to='/dashboard/allClasses'>
+                                    <IoBookmarksSharp />
+                                    All classes</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to='/dashboard/profile'>
+                                    <FaList />
+                                    Profile</NavLink>
+                            </li>
+                        </>
+                    }
+
+                    {/* for  Teacher */}
+                    {
+                        teacher &&
+                        <>
+                            <li>
+                                <NavLink to='/dashboard/teacherHome'>
+                                    <FaHome />
+                                    Teacher Home</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to='/dashboard/addclass'>
+                                    <MdBookmarkAdd className="text-xl"/>
+                                    Add Class</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to='/dashboard/myClass'>
+                                    <IoBookmarksSharp />
+                                    My Class</NavLink>
                             </li>
                             <li>
                                 <NavLink to='/dashboard/profile'>

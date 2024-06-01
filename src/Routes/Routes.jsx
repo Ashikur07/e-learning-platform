@@ -6,6 +6,7 @@ import Home from "../Pages/Home/Home/Home";
 import Teaching from "../Pages/Teaching/Teaching";
 import AllClasses from "../Pages/AllClasses/AllClasses";
 import Dashboard from "../Layout/Dashboard";
+import Profile from "../components/Profile/Profile";
 
 const router = createBrowserRouter([
     {
@@ -40,7 +41,8 @@ const router = createBrowserRouter([
         element: <Dashboard></Dashboard>,
         children: [
             {
-
+                path: 'profile',
+                element:<Profile></Profile>
             }
         ]
     }
