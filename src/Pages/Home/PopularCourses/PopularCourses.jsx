@@ -14,7 +14,7 @@ const PopularCourses = () => {
 
     return (
         <div className="my-20 max-w-7xl mx-auto">
-            <h1 className="text-4xl text-[#e96223] font-bold text-center">Popular Courses</h1>
+            <h1 className="text-5xl text-[#e96223] font-bold text-center">Popular Courses</h1>
 
             <div className="flex justify-around mt-10">
                 {
