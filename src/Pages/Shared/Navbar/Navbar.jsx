@@ -46,7 +46,7 @@ const Navbar = () => {
         <>
             <li className="font-semibold mr-1"><NavLink to='/'>Home</NavLink></li>
             <li className="font-semibold mr-1"><NavLink to='/allJobs'>All Classes</NavLink></li>
-            <li className="font-semibold mr-1"><NavLink to='/addJobs'>Teach on LearnQuest</NavLink></li>
+            <li className="font-semibold mr-1"><NavLink to='/teaching'>Teach on LearnQuest</NavLink></li>
         </>
     );
 

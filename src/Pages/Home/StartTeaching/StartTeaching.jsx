@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const StartTeaching = () => {
     return (
@@ -10,8 +11,8 @@ const StartTeaching = () => {
 
                 <div className="flex-1 mt-12">
                     <h1 className="text-3xl font-semibold pb-3">Teach on Your Schedule</h1>
-                    <p>Enjoy the flexibility to teach when it suits you. Whether you prefer part-time or full-time teaching, our platform accommodates your availability. Create your own schedule, choose the hours you want to work, and balance teaching with other commitments. With our user-friendly tools, managing your classes has never been easier.</p>
-                    <button className="bg-[#0B7077] p-2 mt-7 text-white px-4">Start teaching today</button>
+                    <p className="pb-8">Enjoy the flexibility to teach when it suits you. Whether you prefer part-time or full-time teaching, our platform accommodates your availability. Create your own schedule, choose the hours you want to work, and balance teaching with other commitments. With our user-friendly tools, managing your classes has never been easier.</p>
+                    <Link to='/teaching' className="bg-[#0B7077] p-2 text-white px-4  ">Start teaching today</Link>
                 </div>
             </div>
         </div>
