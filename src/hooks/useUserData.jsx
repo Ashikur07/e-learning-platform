@@ -11,7 +11,6 @@ const useUserData = ({email}) => {
             return res.data;
         }
     })
-
     return users;
 };
 

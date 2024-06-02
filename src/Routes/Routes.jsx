@@ -8,6 +8,7 @@ import AllClasses from "../Pages/AllClasses/AllClasses";
 import Dashboard from "../Layout/Dashboard";
 import Profile from "../components/Profile/Profile";
 import TeacherRequest from "../Pages/Dashboard/Admin/TeacherRequest/TeacherRequest";
+import Users from "../Pages/Dashboard/Admin/Users/Users";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: 'teacherRequest',
                 element: <TeacherRequest></TeacherRequest>
+            },
+            {
+                path:'users',
+                element:<Users></Users>
             }
         ]
     }
