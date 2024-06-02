@@ -5,6 +5,7 @@ import { AiOutlineEye } from "react-icons/ai";
 import { FaRegEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { updateProfile } from 'firebase/auth';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const Register = () => {
 
@@ -12,6 +13,7 @@ const Register = () => {
         document.title = 'Register';
     }, []);
 
+    const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
     const { createNewUser, setUser } = useContext(AuthContext);
     const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +24,7 @@ const Register = () => {
         const password = e.target.password.value;
         const name = e.target.name.value;
         const photoUrl = e.target.photo.value;
-        
+
         if (password.length < 6) {
             Swal.fire({
                 position: "middle",
@@ -65,18 +67,30 @@ const Register = () => {
                     displayName: name,
                     photoURL: photoUrl
                 })
-                setUser({...user, photoURL: photoUrl, displayName:name})
-                
-                Swal.fire({
-                    title: "Registration Successfull..!",
-                    icon: "success",
-                    timer: 1500,
-                });
+                setUser({ ...user, photoURL: photoUrl, displayName: name })
 
-                setTimeout(() => {
-                    navigate('/');
-                }, 1500);
+                // create user entry in the database
+                const userInfo = {
+                    name: name,
+                    email: email,
+                    role: "student",
+                }
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            console.log('user added to the database');
+                            Swal.fire({
+                                title: "Registration Successfull..!",
+                                icon: "success",
+                                timer: 1500,
+                            });
 
+                            setTimeout(() => {
+                                navigate('/');
+                            }, 1500);
+
+                        }
+                    })
             })
 
             .catch(error => {

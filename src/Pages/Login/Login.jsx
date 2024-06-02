@@ -1,11 +1,12 @@
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import {  GoogleAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { AiOutlineEye } from "react-icons/ai";
 import { FaRegEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 
 
@@ -19,18 +20,31 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const location = useLocation();
     const { createUserWithGoogle, signInUser } = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
+
 
     const googleProvider = new GoogleAuthProvider();
-  
+
     const handleGoogleSignIn = () => {
         createUserWithGoogle(googleProvider)
-            .then(() => {
-                Swal.fire({
-                    title: "Login Successfull..!",
-                    icon: "success",
-                    timer: 2000,
-                });
-                navigate(location?.state ? location.state : '/');
+            .then(result => {
+                const user = result.user;
+                const userInfo = {
+                    email: user?.email,
+                    name: user?.displayName,
+                    role: "student",
+                }
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        console.log(res.data);
+                        Swal.fire({
+                            title: "Login Successfull..!",
+                            icon: "success",
+                            timer: 2000,
+                        });
+                        navigate(location?.state ? location.state : '/');
+                    })
+
 
             })
             .catch()
