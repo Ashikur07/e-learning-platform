@@ -1,5 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Teaching = () => {
 
@@ -7,25 +9,46 @@ const Teaching = () => {
     console.log(user);
     const axiosPublic = useAxiosPublic();
 
-    const handleSubmit = e =>{
+    const axiosSecure = useAxiosSecure();
+    const { data: users = [] } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users?email=${user.email}`)
+            return res.data;
+        }
+    })
+    console.log(users[0]?._id);
+
+
+    const handleSubmit = e => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
-        const image = form.image.value? form.image.value : user.photoURL ;
+        const image = form.image.value ? form.image.value : user.photoURL;
         const email = user.email;
         const title = form.title.value;
         const experience = form.experience.value;
         const category = form.category.value;
+        const userId = users[0]?._id;
+        const status = "pending";
 
         console.log(name, image, email, title, experience, category);
 
-        const info ={ name, image, email, title, experience, category};
+        const info = { name, image, email, title, experience, category, userId , status};
 
-        axiosPublic.post('/applyforTeaching', info)
-        .then(res =>{
-            console.log(res.data);
-        })
-        
+        if (users[0].role === "admin") {
+            alert('you have admin');
+        }
+        else if(users[0].role === "teacher"){
+            alert('you teacher')
+        }
+        else{
+            axiosPublic.post('/applyforTeaching', info)
+            .then(res => {
+                console.log(res.data);
+            })
+        }
+
     }
 
     return (
@@ -46,8 +69,8 @@ const Teaching = () => {
 
                     <div className="mb-4">
                         <p className="pb-1">Images (URL)</p>
-                        <input type="text" name="image" placeholder={user?.photoURL} 
-                         className="input input-bordered w-full text-[13px]" />
+                        <input type="text" name="image" placeholder={user?.photoURL}
+                            className="input input-bordered w-full text-[13px]" />
                     </div>
 
                     <div className="mb-4">
@@ -81,7 +104,7 @@ const Teaching = () => {
 
                     <div className="mb-5">
                         <p className="pb-1">Email</p>
-                        <input type="text" name="password" defaultValue={user?.email} className="input input-bordered w-full" disabled/>
+                        <input type="text" name="password" defaultValue={user?.email} className="input input-bordered w-full" disabled />
                     </div>
 
                     <button className="btn uppercase w-full bg-[#23C45E] text-white hover:bg-[#2aac5a]">Apply</button>

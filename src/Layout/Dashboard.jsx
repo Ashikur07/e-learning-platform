@@ -4,13 +4,24 @@ import { FaHome } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import { IoBookmarksSharp, IoPersonAdd } from "react-icons/io5";
 import { MdBookmarkAdd } from "react-icons/md";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 
 const Dashboard = () => {
-    const student = false;
-    const admin = true;
-    const teacher = false;
+
     const { user } = useAuth();
+
+    const axiosSecure = useAxiosSecure();
+    const { data: users = [] } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users?email=${user.email}`)
+            return res.data;
+        }
+    })
+
+    console.log(users[0]?.role);
 
     return (
         <div className="flex">
@@ -33,7 +44,7 @@ const Dashboard = () => {
 
                     {/* for student */}
                     {
-                        student &&
+                        users[0]?.role ==="student" &&
                         <>
                             <li>
                                 <NavLink to='/dashboard/studentHome'>
@@ -55,7 +66,7 @@ const Dashboard = () => {
 
                     {/* for admin */}
                     {
-                        admin &&
+                        users[0]?.role ==="admin" &&
                         <>
                             <li>
                                 <NavLink to='/dashboard/adminHome'>
@@ -87,7 +98,7 @@ const Dashboard = () => {
 
                     {/* for  Teacher */}
                     {
-                        teacher &&
+                        users[0]?.role ==="teacher" &&
                         <>
                             <li>
                                 <NavLink to='/dashboard/teacherHome'>

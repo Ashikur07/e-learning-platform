@@ -5,15 +5,45 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 const TeacherRequest = () => {
 
     const axiosSecure = useAxiosSecure();
-    const { data: applyers = [] } = useQuery({
+    const { data: applyers = [], refetch } = useQuery({
         queryKey: ['applyers'],
         queryFn: async () => {
             const res = await axiosSecure.get('/applyforTeaching')
             return res.data;
         }
     })
-
     console.log(applyers);
+
+    const handleMakeTeacher = (id, _id) => {
+        axiosSecure.patch(`/users/teacher/${id}`)
+            .then(res => {
+                //test role
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    alert('success');
+                }
+            })
+
+        axiosSecure.patch(`/applyforTeaching/teacher/${_id}`, { status: 'accepted' })
+        .then(res => {
+            //test role
+            if (res.data.modifiedCount > 0) {
+                refetch();
+            }
+        })
+    }
+
+    const handleRejected = id => {
+        axiosSecure.patch(`/applyforTeaching/teacher/${id}`, { status: 'rejected' })
+            .then(res => {
+                //test role
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    alert('rejected');
+                }
+            })
+    }
+
 
     return (
         <div>
@@ -50,10 +80,26 @@ const TeacherRequest = () => {
                                     <td>{applyer.name}</td>
                                     <td>{applyer.title}</td>
                                     <td>{applyer.category}</td>
-                                    <td>{applyer.experience}</td>
-                                    <td>Pending</td>
-                                    <td><button className="p-3 rounded-lg bg-green-600 font-semibold text-white">approves</button></td>
-                                    <td><button className="p-3 px-5 text-white font-semibold bg-orange-500 rounded-lg">reject</button></td>
+                                    <td >{applyer.experience}</td>
+                                    <td className="font-bold">
+                                        {applyer.status}
+                                    </td>
+                                    <td>
+                                        {
+                                            applyer.status ==="rejected"?
+                                            <button className="p-3 rounded-lg bg-[#b9adad] font-semibold text-white" disabled>approves</button> : 
+                                            <button onClick={() => handleMakeTeacher(applyer.userId, applyer._id)} className="p-3 rounded-lg bg-green-600 font-semibold text-white">approves</button>
+                                        }
+                                        
+                                    </td>
+                                    <td>
+                                        {
+                                            applyer.status ==="accepted" ?
+                                                <button className="p-3 px-5 text-white font-semibold bg-[#b9adad] rounded-lg" disabled>reject</button> :
+                                                <button onClick={() => handleRejected(applyer._id)} className="p-3 px-5 text-white font-semibold bg-orange-500 rounded-lg">reject</button>
+                                        }
+
+                                    </td>
                                 </tr>
 
                             )
