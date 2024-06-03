@@ -38,7 +38,7 @@ const AllClass = () => {
 
 
     return (
-        <div>
+        <div className="mb-20">
             <Heading title="All Classes"></Heading>
 
             <div className="overflow-x-auto max-w-6xl mx-auto border-2 shadow-2xl mt-10">
@@ -70,7 +70,7 @@ const AllClass = () => {
                                         </div>
                                     </td>
                                     <td>{clas.title}</td>
-                                    <td>{clas.description}</td>
+                                    <td className="max-w-56">{clas.description}</td>
                                     <td>{clas.email}</td>
 
                                     <td>
@@ -87,9 +87,12 @@ const AllClass = () => {
                                             }
 
                                             {
-                                                clas?.status === 'accepted' ?
+                                                clas?.status === 'accepted' &&
                                                     <button className="p-2 px-5 text-white font-semibold bg-slate-300 rounded-md" disabled>reject</button>
-                                                    :
+                                                    ||
+                                                    clas?.status === 'rejected' &&
+                                                    <button className="p-2 px-5 text-white font-semibold bg-slate-300 rounded-md" disabled>already reject</button>
+                                                    ||
                                                     <button onClick={() => handleRejected(clas._id)} className="p-2 px-5 text-white font-semibold bg-orange-500 rounded-md">reject</button>
 
                                             }
