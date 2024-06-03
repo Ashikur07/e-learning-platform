@@ -1,12 +1,36 @@
 import Heading from "../../../../components/Heading/Heading";
 import useAuth from "../../../../hooks/useAuth";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const AddClass = () => {
 
-    const {user} = useAuth();
+    const { user } = useAuth();
+    const axiosPublic = useAxiosPublic();
+
     const handleSubmit = e => {
         e.preventDefault();
+        const form = e.target;
+        const title = form.title.value;
+        const image = form.image.value;
+        const price = form.price.value;
+        const name = form.name.value;
+        const email = form.email.value;
+        const description = form.description.value;
+        const status = "pending";
+        console.log(title, image, price, name, email, description, status);
+
+        const classInfo = {
+            title, image, price, name, email, description, status
+        }
+
+        axiosPublic.post('/classes', classInfo)
+            .then(res => {
+                console.log(res.data);
+                alert('success')
+            })
     }
+
+
     return (
         <div>
             <Heading title="Add a new Class"></Heading>
@@ -25,7 +49,7 @@ const AddClass = () => {
                     <div className="mb-4">
                         <p className="pb-1">Images (URL)</p>
                         <input type="text" name="image" placeholder="Enter Image Url"
-                            className="input input-bordered w-full" />
+                            className="input input-bordered w-full" required />
                     </div>
 
                     <div className="mb-4">
@@ -47,7 +71,7 @@ const AddClass = () => {
 
                     <div className="mb-5">
                         <p className="pb-1">Description</p>
-                        <textarea placeholder="Write here" className="textarea textarea-bordered textarea-md w-full " ></textarea>
+                        <textarea name='description' placeholder="Write here" className="textarea textarea-bordered textarea-md w-full" required></textarea>
                     </div>
 
                     <button className="btn uppercase w-full bg-[#23C45E] text-white hover:bg-[#2aac5a]">Add Class</button>

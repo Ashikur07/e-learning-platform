@@ -11,6 +11,7 @@ import TeacherRequest from "../Pages/Dashboard/Admin/TeacherRequest/TeacherReque
 import Users from "../Pages/Dashboard/Admin/Users/Users";
 import PrivateRoute from "./PrivateRoute";
 import AddClass from "../Pages/Dashboard/Teacher/AddClass/AddClass";
+import AllClass from "../Pages/Dashboard/Admin/AllClass/AllClass";
 
 const router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
             {
                 path:'users',
                 element:<PrivateRoute><Users></Users></PrivateRoute>
+            },
+            {
+                path:'allClasses',
+                element:<AllClass></AllClass>
             },
 
             // for teacher route
