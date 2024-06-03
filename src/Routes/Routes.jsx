@@ -9,6 +9,7 @@ import Dashboard from "../Layout/Dashboard";
 import Profile from "../components/Profile/Profile";
 import TeacherRequest from "../Pages/Dashboard/Admin/TeacherRequest/TeacherRequest";
 import Users from "../Pages/Dashboard/Admin/Users/Users";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
             {
                 path: 'profile',
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
             },
             {
                 path:'users',
-                element:<Users></Users>
+                element:<PrivateRoute><Users></Users></PrivateRoute>
             }
         ]
     }

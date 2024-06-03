@@ -15,7 +15,7 @@ const TeacherRequest = () => {
     console.log(applyers);
 
     const handleMakeTeacher = (id, _id) => {
-        axiosSecure.patch(`/users/teacher/${id}`)
+        axiosSecure.patch(`/users/teacher/${id}`,{role: 'teacher'})
             .then(res => {
                 //test role
                 if (res.data.modifiedCount > 0) {
