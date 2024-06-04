@@ -17,10 +17,11 @@ const AddClass = () => {
         const email = form.email.value;
         const description = form.description.value;
         const status = "pending";
-        console.log(title, image, price, name, email, description, status);
+        const enrolment = 0;
+        console.log(title, image, price, name, email, description, status, enrolment);
 
         const classInfo = {
-            title, image, price, name, email, description, status
+            title, image, price, name, email, description, status, enrolment
         }
 
         axiosPublic.post('/classes', classInfo)

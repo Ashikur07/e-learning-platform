@@ -35,7 +35,14 @@ const MyCourseCard = ({ clas, handleDelete }) => {
                         <div className="flex justify-between">
                             <button onClick={() => handleDelete(clas._id)} className="bg-orange-600 py-1 px-3 text-white rounded-md">Delete</button>
                             <Link to={`/dashboard/update/${clas._id}`} className="bg-green-600 py-1 px-3 text-white rounded-md">Update</Link>
-                            <button className="bg-cyan-800 py-1 px-3 text-white rounded-md">Details</button>
+
+                            {
+                                clas?.status === 'accepted' ? 
+                                <button className="bg-cyan-800 py-1 px-3 text-white rounded-md">Details</button> : 
+                                <button className="bg-slate-200 py-1 px-3 text-white rounded-md" disabled>Details</button>
+
+                            }
+                            
                         </div>
                     </div>
                 </div>

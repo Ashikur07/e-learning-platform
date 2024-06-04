@@ -18,6 +18,7 @@ const UpdateForm = () => {
         const email = form.email.value;
         const description = form.description.value ? form.description.value : classInfo.description;
         const status = classInfo.status;
+        const enrolment = classInfo.enrolment;
 
         console.log(title, image, price, name, email, description, status);
         const updateClassInfo = {
@@ -27,7 +28,8 @@ const UpdateForm = () => {
             name,
             email,
             description,
-            status
+            status,
+            enrolment
         }
 
         axiosSecure.put(`/classes/${classInfo._id}`, updateClassInfo)
