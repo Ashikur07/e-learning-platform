@@ -1,14 +1,23 @@
-import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../../Provider/AuthProvider";
+import useAuth from "../../../hooks/useAuth";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext);
-
+    const { user, logOut } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
     const [theme, setTheme] = useState('light');
+
+    const [userInfo, setUserInfo] = useState([]);
+    useEffect(() => {
+        axios(`http://localhost:5000/users?email=${user?.email}`)
+            .then(res => {
+                setUserInfo(res.data);
+            })
+    }, [])
+
+    console.log(userInfo[0]?.role);
 
     const handleToggle = e => {
         if (e.target.checked) {
@@ -91,10 +100,17 @@ const Navbar = () => {
                                 </div>
                             </summary>
 
-                            <div className=" -left-20 lg:-left-12 top-12 lg:top-[59px] menu dropdown-content z-[10]  bg-slate-600 rounded-lg text-white w-36 p-4 space-y-3">
+                            <div className=" -left-20 lg:-left-12 top-12 lg:top-[59px] menu dropdown-content z-[10]  bg-slate-600 rounded-lg text-white w-[180px] p-4 space-y-3">
                                 <p>{user?.displayName}</p>
                                 <div className="space-y-3">
-                                    <button className="bg-slate-800 py-2 px-3 rounded-md font-semibold w-full"><Link to='/dashboard'>Dashboard</Link></button><br />
+                                    <button className="bg-slate-800 py-2 px-3 rounded-md font-semibold w-full"><Link
+                                    to={userInfo[0]?.role === 'teacher' && '/dashboard/myClass'
+                                        ||
+                                        userInfo[0]?.role === 'admin' && '/dashboard/teacherRequest'
+                                        || '/dashboard/myEnrollClass'
+                                    }
+
+                                    >Dashboard</Link></button><br />
                                     <button onClick={handleLogOut} className="bg-slate-800 w-full py-2 px-3 rounded-md font-semibold">Logout</button>
                                 </div>
                             </div>

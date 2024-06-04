@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 
-const MyCourseCard = ({ clas }) => {
+const MyCourseCard = ({ clas, handleDelete }) => {
     const { user } = useAuth();
 
     return (
@@ -32,8 +33,8 @@ const MyCourseCard = ({ clas }) => {
                             </div>
                         </div>
                         <div className="flex justify-between">
-                            <button className="bg-orange-600 py-1 px-3 text-white rounded-md">Delete</button>
-                            <button className="bg-green-600 py-1 px-3 text-white rounded-md">Update</button>
+                            <button onClick={() => handleDelete(clas._id)} className="bg-orange-600 py-1 px-3 text-white rounded-md">Delete</button>
+                            <Link to={`/dashboard/update/${clas._id}`} className="bg-green-600 py-1 px-3 text-white rounded-md">Update</Link>
                             <button className="bg-cyan-800 py-1 px-3 text-white rounded-md">Details</button>
                         </div>
                     </div>

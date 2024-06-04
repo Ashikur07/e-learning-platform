@@ -46,11 +46,6 @@ const Dashboard = () => {
                         userInfo[0]?.role ==="student" &&
                         <>
                             <li>
-                                <NavLink to='/dashboard/studentHome'>
-                                    <FaHome />
-                                    Student Home</NavLink>
-                            </li>
-                            <li>
                                 <NavLink to='/dashboard/myEnrollClass'>
                                     <IoBookmarksSharp />
                                     Myenroll class</NavLink>
@@ -67,11 +62,6 @@ const Dashboard = () => {
                     {
                         userInfo[0]?.role ==="admin" &&
                         <>
-                            <li>
-                                <NavLink to='/dashboard/adminHome'>
-                                    <FaHome />
-                                    Admin Home</NavLink>
-                            </li>
                             <li>
                                 <NavLink to='/dashboard/teacherRequest'>
                                     <IoPersonAdd />
@@ -99,11 +89,6 @@ const Dashboard = () => {
                     {
                         userInfo[0]?.role ==="teacher" &&
                         <>
-                            <li>
-                                <NavLink to='/dashboard/teacherHome'>
-                                    <FaHome />
-                                    Teacher Home</NavLink>
-                            </li>
                             <li>
                                 <NavLink to='/dashboard/addclass'>
                                     <MdBookmarkAdd className="text-xl"/>
