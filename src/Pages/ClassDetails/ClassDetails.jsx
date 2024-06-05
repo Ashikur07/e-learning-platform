@@ -3,7 +3,7 @@ import { Link, useLoaderData } from "react-router-dom";
 const ClassDetails = () => {
 
     const classes = useLoaderData();
-    console.log(classes)
+    console.log(classes);
 
     return (
         <div className="mt-5 pb-24">

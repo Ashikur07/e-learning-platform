@@ -19,6 +19,9 @@ const EnrollClass = () => {
     })
     console.log(classes);
 
+    const matchClass = classes.find(clas => clas.courseId ='665e86a73db259284839ffef')
+    console.log(matchClass);
+
 
     return (
         <div>

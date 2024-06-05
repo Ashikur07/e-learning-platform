@@ -10,6 +10,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 const CheckOutForm = ({ classes }) => {
 
@@ -21,6 +22,31 @@ const CheckOutForm = ({ classes }) => {
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
+    // console.log(classes);
+
+    // match the user to auth data
+    const { data: users = [] } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users?email=${user.email}`)
+            return res.data;
+        }
+    })
+    // console.log(users);
+
+    // payment class
+    const { data: payments = [], refetch } = useQuery({
+        queryKey: ['payments'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/payments?studentEmail=${user.email}`);
+            return res.data;
+        }
+    })
+    // console.log(payments);
+
+    const matchClass = payments.find(clas => clas.courseId === classes._id)
+    // console.log(matchClass);
+
 
     useEffect(() => {
         axiosSecure
@@ -32,6 +58,31 @@ const CheckOutForm = ({ classes }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        // check user role
+        if (users[0]?.role === "admin") {
+            Swal.fire({
+                title: "You are admin ..!",
+                icon: "error"
+            });
+            return;
+
+        }
+        else if (users[0]?.role === "teacher") {
+            Swal.fire({
+                title: "Your are teacher ..!",
+                icon: "warning"
+            });
+            return;
+        }
+        else if (matchClass) {
+            Swal.fire({
+                title: "Already enroll this course ..!",
+                icon: "warning"
+            });
+            return;
+        }
+
 
         if (!stripe || !elements) {
             return;
