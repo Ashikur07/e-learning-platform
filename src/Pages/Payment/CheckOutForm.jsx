@@ -1,27 +1,34 @@
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useAuth from "../../hooks/useAuth";
+import {
+    CardNumberElement,
+    CardExpiryElement,
+    CardCvcElement,
+    useElements,
+    useStripe,
+} from '@stripe/react-stripe-js';
+import { useEffect, useState } from 'react';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const CheckOutForm = ({ classes }) => {
 
-    const [error, setError] = useState([]);
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
     const [transactionId, setTransactionId] = useState('');
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
-    // console.log(price);
 
     useEffect(() => {
-        axiosSecure.post('/create-payment-intent', { price: classes.price })
-            .then(res => {
-                // console.log(res.data.clientSecret);
+        axiosSecure
+            .post('/create-payment-intent', { price: classes.price })
+            .then((res) => {
                 setClientSecret(res.data.clientSecret);
-            })
-    }, [])
-
+            });
+    }, [axiosSecure, classes.price]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -30,89 +37,141 @@ const CheckOutForm = ({ classes }) => {
             return;
         }
 
-        const card = elements.getElement(CardElement);
-        if (card == null) {
+        const cardNumberElement = elements.getElement(CardNumberElement);
+        const cardExpiryElement = elements.getElement(CardExpiryElement);
+        const cardCvcElement = elements.getElement(CardCvcElement);
+
+        if (!cardNumberElement || !cardExpiryElement || !cardCvcElement) {
             return;
         }
 
         const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card', card
-        })
+            type: 'card',
+            card: cardNumberElement,
+        });
 
         if (error) {
-            console.log('[error]', error);
-            setError(error.message)
+            setError(error.message);
         } else {
-            console.log('PaymentMethod', paymentMethod);
             setError('');
         }
 
-        // confirm payment 
         const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
-                card: card,
+                card: cardNumberElement,
                 billing_details: {
                     email: user?.email || 'anonymous',
                     name: user?.name || 'anonymous',
-                }
-            }
-        })
+                },
+            },
+        });
 
         if (confirmError) {
-            console.log('confirm error')
-        }
-        else {
-            console.log('payment intent', paymentIntent);
-            if (paymentIntent.status === "succeeded");
-            console.log('transaction id ', paymentIntent.id);
-            setTransactionId(paymentIntent.id);
+            setError(confirmError.message);
+        } else {
+            if (paymentIntent.status === 'succeeded') {
+                setTransactionId(paymentIntent.id);
 
-            // now save the payment in the database
-            const payment = {
-                studentEmail: user.email,
-                date: new Date(),
-                transactionId: paymentIntent.id,
-                            courseId :classes._id,
-                            title: classes.title,
-                            image: classes.email,
-                            price: classes.price,
-                            name: classes.name,
-                            email: classes.email,
-                            description: classes.description,
-                            enrolment: classes.enrolment + 1,
+                const payment = {
+                    studentEmail: user.email,
+                    date: new Date(),
+                    transactionId: paymentIntent.id,
+                    courseId: classes._id,
+                    title: classes.title,
+                    image: classes.image,
+                    price: classes.price,
+                    name: classes.name,
+                    email: classes.email,
+                    description: classes.description,
+                    enrolment: classes.enrolment + 1,
+                };
+
+                const res = await axiosSecure.post('/payments', payment);
+                console.log(res);
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Payment Successfull..!",
+                        icon: "success"
+                    });
+                    navigate('/dashboard/myEnrollClass');
+
+                }
             }
-
-            const res = await axiosSecure.post('/payments', payment);
-            console.log(res);
-
         }
-    }
+    };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <CardElement
-                options={{
-                    style: {
-                        base: {
-                            fontSize: '16px',
-                            color: '#424770',
-                            '::placeholder': {
-                                color: '#aab7c4',
+        <form onSubmit={handleSubmit} className="mb-20 mt-5 max-w-md mx-auto bg-white p-8 rounded-lg shadow-2xl">
+            <div className="mb-4">
+                <label className="block text-gray-700 font-medium mb-2">Card Number</label>
+                <CardNumberElement
+                    options={{
+                        style: {
+                            base: {
+                                fontSize: '16px',
+                                color: '#424770',
+                                '::placeholder': {
+                                    color: '#aab7c4',
+                                },
+                            },
+                            invalid: {
+                                color: '#9e2146',
                             },
                         },
-                        invalid: {
-                            color: '#9e2146',
+                    }}
+                    className="p-3 border border-gray-300 rounded-lg w-full"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 font-medium mb-2">Expiration Date</label>
+                <CardExpiryElement
+                    options={{
+                        style: {
+                            base: {
+                                fontSize: '16px',
+                                color: '#424770',
+                                '::placeholder': {
+                                    color: '#aab7c4',
+                                },
+                            },
+                            invalid: {
+                                color: '#9e2146',
+                            },
                         },
-                    },
-                }}
-            />
-            <button className="btn btn-primary btn-sm my-4" type="submit" disabled={!stripe || !clientSecret}>
+                    }}
+                    className="p-3 border border-gray-300 rounded-lg w-full"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 font-medium mb-2">CVC</label>
+                <CardCvcElement
+                    options={{
+                        style: {
+                            base: {
+                                fontSize: '16px',
+                                color: '#424770',
+                                '::placeholder': {
+                                    color: '#aab7c4',
+                                },
+                            },
+                            invalid: {
+                                color: '#9e2146',
+                            },
+                        },
+                    }}
+                    className="p-3 border border-gray-300 rounded-lg w-full"
+                />
+            </div>
+            <button
+                className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+                type="submit"
+                disabled={!stripe || !clientSecret}
+            >
                 Pay
             </button>
-            <p className="text-red-600 text-lg">{error}</p>
-            {
-                transactionId && <p className="text-green-600">Your transaction id : ${transactionId}</p>
-            }
+            {error && <p className="text-red-600 text-lg mt-4">{error}</p>}
+            {transactionId && <p className="text-green-600 text-lg mt-4">Your transaction id: {transactionId}</p>}
         </form>
     );
 };
