@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Heading from "../../../../components/Heading/Heading";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AllClass = () => {
 
@@ -20,7 +21,10 @@ const AllClass = () => {
                 //test role
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                    alert('success');
+                    Swal.fire({
+                        title: "Successfully approved..!",
+                        icon: "success"
+                    });
                 }
             })
     }
@@ -31,7 +35,10 @@ const AllClass = () => {
                 //test role
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                    alert('success');
+                    Swal.fire({
+                        title: "Request rejected..!",
+                        icon: "error"
+                    });
                 }
             })
     }
@@ -88,12 +95,12 @@ const AllClass = () => {
 
                                             {
                                                 clas?.status === 'accepted' &&
-                                                    <button className="p-2 px-5 text-white font-semibold bg-slate-300 rounded-md" disabled>reject</button>
-                                                    ||
-                                                    clas?.status === 'rejected' &&
-                                                    <button className="p-2 px-5 text-white font-semibold bg-slate-300 rounded-md" disabled>already reject</button>
-                                                    ||
-                                                    <button onClick={() => handleRejected(clas._id)} className="p-2 px-5 text-white font-semibold bg-orange-500 rounded-md">reject</button>
+                                                <button className="p-2 px-5 text-white font-semibold bg-slate-300 rounded-md" disabled>reject</button>
+                                                ||
+                                                clas?.status === 'rejected' &&
+                                                <button className="p-2 px-5 text-white font-semibold bg-slate-300 rounded-md" disabled>already reject</button>
+                                                ||
+                                                <button onClick={() => handleRejected(clas._id)} className="p-2 px-5 text-white font-semibold bg-orange-500 rounded-md">reject</button>
 
                                             }
 

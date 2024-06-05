@@ -1,8 +1,11 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import useAuth from "../../../../hooks/useAuth";
 
 const UpdateForm = () => {
 
+    const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
     const classInfo = useLoaderData();
     const navigate = useNavigate();
@@ -19,8 +22,9 @@ const UpdateForm = () => {
         const description = form.description.value ? form.description.value : classInfo.description;
         const status = classInfo.status;
         const enrolment = classInfo.enrolment;
+        const photoURL = user?.photoURL;
 
-        console.log(title, image, price, name, email, description, status);
+        console.log(title, image, price, name, email, description, status, photoURL);
         const updateClassInfo = {
             title,
             image,
@@ -29,25 +33,31 @@ const UpdateForm = () => {
             email,
             description,
             status,
-            enrolment
+            enrolment,
+            photoURL
         }
 
         axiosSecure.put(`/classes/${classInfo._id}`, updateClassInfo)
             .then(res => {
                 console.log(res.data);
                 if (res.data.modifiedCount > 0) {
-                    alert('success');
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Update Successfull...!",
+                        icon: "success"
+                      });
                     navigate('/dashboard/myClass');
                 }
 
             })
 
-
     }
+
 
     return (
         <div>
-            <div className="max-w-3xl mx-auto mt-10 mb-20 bg-base-300 shadow-2xl gap-5">
+            <div className="max-w-3xl mx-auto mt-10 mb-20 bg-base-300 shadow-2xl gap-5"> 
+                <div></div>
 
                 {/* form start */}
                 <form onSubmit={handleSubmit} className="p-10">

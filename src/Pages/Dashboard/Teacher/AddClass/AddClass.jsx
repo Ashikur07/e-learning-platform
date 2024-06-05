@@ -1,11 +1,14 @@
+import Swal from "sweetalert2";
 import Heading from "../../../../components/Heading/Heading";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import { useNavigate } from "react-router-dom";
 
 const AddClass = () => {
 
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -18,16 +21,23 @@ const AddClass = () => {
         const description = form.description.value;
         const status = "pending";
         const enrolment = 0;
-        console.log(title, image, price, name, email, description, status, enrolment);
+        const photoURL = user?.photoURL;
+        console.log(title, image, price, name, email, description, status, enrolment , photoURL);
 
         const classInfo = {
-            title, image, price, name, email, description, status, enrolment
+            title, image, price, name, email, description, status, enrolment, photoURL
         }
 
         axiosPublic.post('/classes', classInfo)
             .then(res => {
                 console.log(res.data);
-                alert('success')
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Successfully added new class",
+                    icon: "success"
+                  });
+                  navigate('/dashboard/myClass');
+
             })
     }
 

@@ -2,12 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Teaching = () => {
 
     const { user } = useAuth();
     console.log(user);
     const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
 
     const axiosSecure = useAxiosSecure();
     const { data: users = [] } = useQuery({
@@ -25,7 +28,7 @@ const Teaching = () => {
         const form = e.target;
         const name = form.name.value;
         const image = form.image.value ? form.image.value : user.photoURL;
-        const email = user.email;
+        const email = user?.email;
         const title = form.title.value;
         const experience = form.experience.value;
         const category = form.category.value;
@@ -34,19 +37,52 @@ const Teaching = () => {
 
         console.log(name, image, email, title, experience, category);
 
-        const info = { name, image, email, title, experience, category, userId , status};
+        const info = { name, image, email, title, experience, category, userId, status };
 
-        if (users[0].role === "admin") {
-            alert('you have admin');
+
+        if (!user) {
+            //
+            Swal.fire({
+                title: "Please Login First",
+                text: "Then Apply for teaching",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Go to Login"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login');
+                }
+            });
+
         }
-        else if(users[0].role === "teacher"){
-            alert('you teacher')
+
+        else if (users[0]?.role === "admin") {
+            Swal.fire({
+                title: "You are admin ..!",
+                text: "So You can not apply for teacher..!",
+                icon: "error"
+            });
         }
-        else{
+        else if (users[0]?.role === "teacher") {
+            Swal.fire({
+                title: "Your role is teacher now ..!",
+                text: "So you no need to apply again ..!",
+                icon: "warning"
+            });
+        }
+        else {
             axiosPublic.post('/applyforTeaching', info)
-            .then(res => {
-                console.log(res.data);
-            })
+                .then(res => {
+                    console.log(res.data);
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Successfully applied for Teacher",
+                        icon: "success"
+                    });
+                    form.reset();
+                })
         }
 
     }

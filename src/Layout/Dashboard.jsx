@@ -12,19 +12,19 @@ const Dashboard = () => {
 
     const { user } = useAuth();
     const [userInfo, setUserInfo] = useState([]);
-    useEffect(() =>{
+    useEffect(() => {
         axios(`http://localhost:5000/users?email=${user.email}`)
-        .then(res =>{
-            setUserInfo(res.data);
-        })
-    },[])
+            .then(res => {
+                setUserInfo(res.data);
+            })
+    }, [])
 
     console.log(userInfo[0]?.role);
 
 
     return (
         <div className="flex">
-            <div className="w-64 min-h-screen bg-orange-400 px-5">
+            <div className="min-w-64 min-h-screen bg-orange-400 px-5">
 
                 {/* show user information */}
                 <div className="text-center mt-10">
@@ -33,8 +33,10 @@ const Dashboard = () => {
                             <img src={user?.photoURL} />
                         </div>
                     </div>
-                    <h1 className="text-2xl font-bold">{user?.displayName}</h1>
-                    <p className="text-lg">{user?.email}</p>
+                    <div className="items-center">
+                        <h1 className="text-2xl font-bold">{user?.displayName}</h1>
+                        <p className="text-lg">{user?.email}</p>
+                    </div>
                 </div>
                 <div className="divider"></div>
 
@@ -43,7 +45,7 @@ const Dashboard = () => {
 
                     {/* for student */}
                     {
-                        userInfo[0]?.role ==="student" &&
+                        userInfo[0]?.role === "student" &&
                         <>
                             <li>
                                 <NavLink to='/dashboard/myEnrollClass'>
@@ -60,7 +62,7 @@ const Dashboard = () => {
 
                     {/* for admin */}
                     {
-                        userInfo[0]?.role ==="admin" &&
+                        userInfo[0]?.role === "admin" &&
                         <>
                             <li>
                                 <NavLink to='/dashboard/teacherRequest'>
@@ -87,11 +89,11 @@ const Dashboard = () => {
 
                     {/* for  Teacher */}
                     {
-                        userInfo[0]?.role ==="teacher" &&
+                        userInfo[0]?.role === "teacher" &&
                         <>
                             <li>
                                 <NavLink to='/dashboard/addclass'>
-                                    <MdBookmarkAdd className="text-xl"/>
+                                    <MdBookmarkAdd className="text-xl" />
                                     Add Class</NavLink>
                             </li>
                             <li>

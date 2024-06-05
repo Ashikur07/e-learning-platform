@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Heading from "../../../../components/Heading/Heading";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 
 const Users = () => {
@@ -17,15 +18,34 @@ const Users = () => {
     console.log(normalUser);
 
     const handleMakeAdmin = id => {
-        console.log(id);
-        axiosSecure.patch(`/users/teacher/${id}`, { role: 'admin' })
-            .then(res => {
-                //test role
-                if (res.data.modifiedCount > 0) {
-                    refetch();
-                    alert('success');
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Admin this user..!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, make admin",
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    axiosSecure.patch(`/users/teacher/${id}`, { role: 'admin' })
+                        .then(res => {
+                            //test role
+                            if (res.data.modifiedCount > 0) {
+                                refetch();
+                                Swal.fire({
+                                    title: "Good job!",
+                                    text: "This user is now admin..!",
+                                    icon: "success"
+                                });
+                            }
+                        })
                 }
-            })
+            });
+
+
     }
 
 

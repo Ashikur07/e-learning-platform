@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Heading from "../../../../components/Heading/Heading";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const TeacherRequest = () => {
 
@@ -15,22 +16,26 @@ const TeacherRequest = () => {
     console.log(applyers);
 
     const handleMakeTeacher = (id, _id) => {
-        axiosSecure.patch(`/users/teacher/${id}`,{role: 'teacher'})
+        axiosSecure.patch(`/users/teacher/${id}`, { role: 'teacher' })
             .then(res => {
                 //test role
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                    alert('success');
+                    Swal.fire({
+                        title: "Success!",
+                        text: "Request successfully accepted..!",
+                        icon: "success"
+                    });
                 }
             })
 
         axiosSecure.patch(`/applyforTeaching/teacher/${_id}`, { status: 'accepted' })
-        .then(res => {
-            //test role
-            if (res.data.modifiedCount > 0) {
-                refetch();
-            }
-        })
+            .then(res => {
+                //test role
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                }
+            })
     }
 
     const handleRejected = id => {
@@ -39,7 +44,11 @@ const TeacherRequest = () => {
                 //test role
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                    alert('rejected');
+                    Swal.fire({
+                        title: "Rejected!",
+                        text: "Request successfully rejected..!",
+                        icon: "error"
+                    });
                 }
             })
     }
@@ -86,15 +95,15 @@ const TeacherRequest = () => {
                                     </td>
                                     <td>
                                         {
-                                            applyer.status ==="rejected"?
-                                            <button className="p-3 rounded-lg bg-[#b9adad] font-semibold text-white" disabled>approves</button> : 
-                                            <button onClick={() => handleMakeTeacher(applyer.userId, applyer._id)} className="p-3 rounded-lg bg-green-600 font-semibold text-white">approves</button>
+                                            applyer.status === "rejected" ?
+                                                <button className="p-3 rounded-lg bg-[#b9adad] font-semibold text-white" disabled>approves</button> :
+                                                <button onClick={() => handleMakeTeacher(applyer.userId, applyer._id)} className="p-3 rounded-lg bg-green-600 font-semibold text-white">approves</button>
                                         }
-                                        
+
                                     </td>
                                     <td>
                                         {
-                                            applyer.status ==="accepted" ?
+                                            applyer.status === "accepted" ?
                                                 <button className="p-3 px-5 text-white font-semibold bg-[#b9adad] rounded-lg" disabled>reject</button> :
                                                 <button onClick={() => handleRejected(applyer._id)} className="p-3 px-5 text-white font-semibold bg-orange-500 rounded-lg">reject</button>
                                         }

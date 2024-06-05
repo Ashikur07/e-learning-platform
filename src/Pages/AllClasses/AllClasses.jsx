@@ -24,7 +24,7 @@ const AllClasses = () => {
                 <Heading title='All Class Here'></Heading>
                 <div className="grid grid-cols-3 gap-5 max-w-6xl mx-auto my-10">
                     {
-                        classes?.map(clas => <ClassCard
+                        adminAproveClasses?.map(clas => <ClassCard
                             key={clas._id}
                             clas={clas}></ClassCard>)
                     }

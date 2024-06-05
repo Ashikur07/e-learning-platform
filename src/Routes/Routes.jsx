@@ -15,6 +15,8 @@ import AllClass from "../Pages/Dashboard/Admin/AllClass/AllClass";
 import MyClass from "../Pages/Dashboard/Teacher/MyClass/MyClass";
 import UpdateClass from "../Pages/Dashboard/Teacher/UpdateClass/UpdateClass";
 import EnrollClass from "../Pages/Dashboard/Student/EnrollClass/EnrollClass";
+import ClassDetails from "../Pages/ClassDetails/ClassDetails";
+import Payment from "../Pages/Payment/Payment";
 
 const router = createBrowserRouter([
     {
@@ -41,6 +43,16 @@ const router = createBrowserRouter([
             {
                 path: '/allclasses',
                 element: <AllClasses></AllClasses>
+            },
+            {
+                path:'/classDetails/:id',
+                element:<ClassDetails></ClassDetails>,
+                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
+            },
+            {
+                path:'/payment/:id',
+                element:<Payment></Payment>,
+                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
             }
         ]
     },
