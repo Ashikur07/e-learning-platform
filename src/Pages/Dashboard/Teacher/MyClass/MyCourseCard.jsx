@@ -37,12 +37,12 @@ const MyCourseCard = ({ clas, handleDelete }) => {
                             <Link to={`/dashboard/update/${clas._id}`} className="bg-green-600 py-1 px-3 text-white rounded-md">Update</Link>
 
                             {
-                                clas?.status === 'accepted' ? 
-                                <button className="bg-cyan-800 py-1 px-3 text-white rounded-md">Details</button> : 
-                                <button className="bg-slate-200 py-1 px-3 text-white rounded-md" disabled>Details</button>
+                                clas?.status === 'accepted' ?
+                                    <Link to={`/dashboard/details/${clas._id}`}><button className="bg-cyan-800 py-1 px-3 text-white rounded-md">Details</button></Link> :
+                                    <button className="bg-slate-200 py-1 px-3 text-white rounded-md" disabled>Details</button>
 
                             }
-                            
+
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ import UpdateClass from "../Pages/Dashboard/Teacher/UpdateClass/UpdateClass";
 import EnrollClass from "../Pages/Dashboard/Student/EnrollClass/EnrollClass";
 import ClassDetails from "../Pages/ClassDetails/ClassDetails";
 import Payment from "../Pages/Payment/Payment";
+import AprovedClassDetails from "../Pages/Dashboard/Teacher/AprovedClassDetails/AprovedClassDetails";
 
 const router = createBrowserRouter([
     {
@@ -45,13 +46,13 @@ const router = createBrowserRouter([
                 element: <AllClasses></AllClasses>
             },
             {
-                path:'/classDetails/:id',
-                element:<PrivateRoute><ClassDetails></ClassDetails></PrivateRoute>,
+                path: '/classDetails/:id',
+                element: <PrivateRoute><ClassDetails></ClassDetails></PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
             },
             {
-                path:'/payment/:id',
-                element:<PrivateRoute><Payment></Payment></PrivateRoute>,
+                path: '/payment/:id',
+                element: <PrivateRoute><Payment></Payment></PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
             }
         ]
@@ -63,7 +64,7 @@ const router = createBrowserRouter([
             // common
             {
                 path: 'profile',
-                element:<Profile></Profile>
+                element: <Profile></Profile>
             },
 
             // for admin route
@@ -72,33 +73,38 @@ const router = createBrowserRouter([
                 element: <TeacherRequest></TeacherRequest>
             },
             {
-                path:'users',
-                element:<PrivateRoute><Users></Users></PrivateRoute>
+                path: 'users',
+                element: <PrivateRoute><Users></Users></PrivateRoute>
             },
             {
-                path:'allClasses',
-                element:<AllClass></AllClass>
+                path: 'allClasses',
+                element: <AllClass></AllClass>
             },
 
             // for teacher route
             {
-                path:'addclass',
-                element:<AddClass></AddClass>
+                path: 'addclass',
+                element: <AddClass></AddClass>
             },
             {
-                path:'myClass',
-                element:<MyClass></MyClass>
+                path: 'myClass',
+                element: <MyClass></MyClass>
             },
             {
-                path:'update/:id',
-                element:<UpdateClass></UpdateClass>,
+                path: 'update/:id',
+                element: <UpdateClass></UpdateClass>,
+                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
+            },
+            {
+                path: 'details/:id',
+                element: <AprovedClassDetails></AprovedClassDetails>,
                 loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
             },
 
             // for student routes
             {
-                path:'myEnrollClass',
-                element:<EnrollClass></EnrollClass>
+                path: 'myEnrollClass',
+                element: <EnrollClass></EnrollClass>
             }
         ]
     }
