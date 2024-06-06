@@ -16,7 +16,7 @@ const AllClass = () => {
     console.log(classes);
 
     const handleApproves = id => {
-        axiosSecure.patch(`/classes/${id}`, { status: 'accepted' , enrolment: "0"})
+        axiosSecure.patch(`/classes/${id}`, { status: 'accepted' , enrolment: "0" , assignmentSubmited: "0"})
             .then(res => {
                 //test role
                 if (res.data.modifiedCount > 0) {
@@ -30,7 +30,7 @@ const AllClass = () => {
     }
 
     const handleRejected = id => {
-        axiosSecure.patch(`/classes/${id}`, { status: 'rejected' , enrolment: "0"})
+        axiosSecure.patch(`/classes/${id}`, { status: 'rejected' , enrolment: "0" , assignmentSubmited: "0"})
             .then(res => {
                 //test role
                 if (res.data.modifiedCount > 0) {

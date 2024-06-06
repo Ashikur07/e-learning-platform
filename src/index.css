@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.my-custom-class {
+    z-index: 2000 !important;
+    /* Replace 2000 with the desired z-index value */
+}

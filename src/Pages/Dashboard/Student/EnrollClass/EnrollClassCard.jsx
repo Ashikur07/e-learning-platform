@@ -16,7 +16,7 @@ const EnrollClassCard = ({ clas }) => {
                     <div className="space-y-8 mt-5">
                        
                         <div>
-                            <Link> <button className="bg-cyan-800 w-full py-2 text-white ">Continue</button></Link>
+                            <Link to={`/dashboard/enrollClassDetails/${clas._id}`}> <button className="bg-cyan-800 w-full py-2 text-white ">Continue</button></Link>
                         </div>
                     </div>
                 </div>

@@ -43,7 +43,7 @@ const AprovedClassDetails = () => {
             refetch();
             console.log(res.data);
             alert('successfully added to the database');
-            form.reset();
+            form.reset();                                                                                                                                                                                                    
         })
     }
 
@@ -74,7 +74,7 @@ const AprovedClassDetails = () => {
 
                         <div className="py-6 px-10 bg-white text-center flex flex-col items-center gap-3 rounded-xl">
                             <FaUserCheck className="text-4xl text-blue-700"></FaUserCheck>
-                            <p className="text-4xl font-bold">100</p>
+                            <p className="text-4xl font-bold">{aprovedClass?.assignmentSubmited}</p>
                             <h1 className="text-3xl">Today <br /> Submitted</h1>
                         </div>
                     </div>
