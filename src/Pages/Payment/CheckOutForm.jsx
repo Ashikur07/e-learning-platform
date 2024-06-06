@@ -11,6 +11,7 @@ import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const CheckOutForm = ({ classes }) => {
 
@@ -145,7 +146,13 @@ const CheckOutForm = ({ classes }) => {
                         text: "Payment Successfull..!",
                         icon: "success"
                     });
-                    navigate('/dashboard/myEnrollClass');
+
+                    axios.patch(`http://localhost:5000/classes/${classes._id}`,{ status: 'accepted' , enrolment: "1"})
+                    .then(res =>{
+                        console.log(res.data);
+                        navigate('/dashboard/myEnrollClass');
+                    })
+                    
 
                 }
             }

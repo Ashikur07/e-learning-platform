@@ -16,7 +16,7 @@ const AllClass = () => {
     console.log(classes);
 
     const handleApproves = id => {
-        axiosSecure.patch(`/classes/${id}`, { status: 'accepted' })
+        axiosSecure.patch(`/classes/${id}`, { status: 'accepted' , enrolment: "0"})
             .then(res => {
                 //test role
                 if (res.data.modifiedCount > 0) {
@@ -30,7 +30,7 @@ const AllClass = () => {
     }
 
     const handleRejected = id => {
-        axiosSecure.patch(`/classes/${id}`, { status: 'rejected' })
+        axiosSecure.patch(`/classes/${id}`, { status: 'rejected' , enrolment: "0"})
             .then(res => {
                 //test role
                 if (res.data.modifiedCount > 0) {
@@ -48,7 +48,7 @@ const AllClass = () => {
         <div className="mb-20">
             <Heading title="All Classes"></Heading>
 
-            <div className="overflow-x-auto max-w-6xl mx-auto border-2 shadow-2xl mt-10">
+            <div className="mb-20 overflow-x-auto max-w-6xl mx-auto border-2 shadow-2xl mt-10">
                 <table className="table">
                     {/* head */}
                     <thead className="bg-[#FB923C] text-xl text-black">

@@ -2,11 +2,26 @@ import { useLoaderData } from "react-router-dom";
 import Heading from "../../../../components/Heading/Heading";
 import { FaPlus, FaUserCheck, FaUsers } from "react-icons/fa";
 import { IoBookmarksSharp } from "react-icons/io5";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const AprovedClassDetails = () => {
 
     const aprovedClass = useLoaderData();
     console.log(aprovedClass);
+    const axiosSecure = useAxiosSecure();
+   
+    const { data: assignment = [], refetch } = useQuery({
+        queryKey: ['assignment'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`assignments?classId=${aprovedClass._id}`);
+            return res.data;
+        }
+    })
+    console.log(assignment);
+
+    // console.log(assignment);
+
 
     const handleAddAssignment = () =>{
         document.getElementById('my_modal_1').showModal();
@@ -18,9 +33,21 @@ const AprovedClassDetails = () => {
         const title = form.title.value;
         const deadline = form.deadline.value;
         const description = form.description.value;
+        const classId = aprovedClass._id;
 
-        console.log(title, deadline, description);
+        console.log(title, deadline, description, classId);
+        const assignmentInfo = {title, deadline, description, classId};
+
+        axiosSecure.post('/assignments', assignmentInfo)
+        .then(res =>{
+            refetch();
+            console.log(res.data);
+            alert('successfully added to the database');
+            form.reset();
+        })
     }
+
+
     return (
         <div>
             <Heading title='Course Details'></Heading>
@@ -35,13 +62,13 @@ const AprovedClassDetails = () => {
                     <div className="items-center flex justify-center gap-6">
                         <div className="py-6 px-10 bg-white text-center flex flex-col items-center gap-3 rounded-xl">
                             <FaUsers className="text-4xl text-blue-700"></FaUsers>
-                            <p className="text-4xl font-bold">100</p>
+                            <p className="text-4xl font-bold">{aprovedClass.enrolment}</p>
                             <h1 className="text-3xl">Total <br /> Enrollment</h1>
                         </div>
 
                         <div className="py-6 px-10 bg-white text-center flex flex-col items-center gap-3 rounded-xl">
                             <IoBookmarksSharp className="text-4xl text-blue-700" />
-                            <p className="text-4xl font-bold">100</p>
+                            <p className="text-4xl font-bold">{assignment?.length}</p>
                             <h1 className="text-3xl">Total <br /> Assignment</h1>
                         </div>
 
@@ -69,7 +96,7 @@ const AprovedClassDetails = () => {
                             <input type="date" name='deadline' className="input input-bordered input-accent w-full max-w-xs mb-4" required />
 
                             <p className="pt-2 text-xl font-bold pb-2">Assignment Description</p>
-                            <textarea name='description' placeholder="Write here" className="textarea textarea-bordered textarea-md w-full max-w-xs" ></textarea>
+                            <textarea name='description' placeholder="Write here" className="textarea textarea-bordered textarea-md w-full max-w-xs"  required></textarea>
 
 
                             <input type='submit' className="mt-3 btn w-full btn-warning font-semibold text-lg" value='Submit' />
