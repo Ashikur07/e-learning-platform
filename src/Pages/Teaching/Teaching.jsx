@@ -22,6 +22,17 @@ const Teaching = () => {
     })
     console.log(users[0]?._id);
 
+    // get apply data to match 
+    const { data: applyforTeaching = [], refetch } = useQuery({
+        queryKey: ['applyforTeaching'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/applyforTeaching?email=${user.email}`)
+            return res.data;
+        }
+    })
+
+    console.log(applyforTeaching.length);
+
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -40,30 +51,20 @@ const Teaching = () => {
         const info = { name, image, email, title, experience, category, userId, status };
 
 
-        if (!user) {
-            //
+        if (applyforTeaching.length > 0) {
             Swal.fire({
-                title: "Please Login First",
-                text: "Then Apply for teaching",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Go to Login"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    navigate('/login');
-                }
+                title: "Already applied..!",
+                icon: "error"
             });
-
+            return;
         }
-
         else if (users[0]?.role === "admin") {
             Swal.fire({
                 title: "You are admin ..!",
                 text: "So You can not apply for teacher..!",
                 icon: "error"
             });
+            return;
         }
         else if (users[0]?.role === "teacher") {
             Swal.fire({
@@ -71,10 +72,12 @@ const Teaching = () => {
                 text: "So you no need to apply again ..!",
                 icon: "warning"
             });
+            return;
         }
         else {
             axiosPublic.post('/applyforTeaching', info)
                 .then(res => {
+                    refetch();
                     console.log(res.data);
                     Swal.fire({
                         title: "Good job!",

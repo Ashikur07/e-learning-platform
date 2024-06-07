@@ -6,18 +6,18 @@ const ClassDetails = () => {
     console.log(classes);
 
     return (
-        <div className="mt-5 pb-24">
+        <div className="mt-10 pb-24">
             <div className="shadow-2xl max-w-6xl mx-auto flex">
 
                 <div className="flex-1">
                     <img className="h-full" src={classes?.image} alt="" />
                 </div>
 
-                <div className="bg-blue-200 flex-1 p-10">
-                    <h1 className="text-3xl font-bold pb-2">{classes.title}</h1>
-                    <p className="pb-5">{classes.description}</p>
-                    <p>Price : ${classes.price}</p>
-                    <p >Totla Enrolment: {classes.enrolment}</p>
+                <div className="bg-blue-200 flex-1 p-10 text-lg">
+                    <h1 className="text-4xl font-bold pb-2">{classes.title}</h1>
+                    <p className="pb-5 text-lg"><span className="font-bold">Description:</span> {classes.description}</p>
+                    <p><span className="font-bold">Price:</span> ${classes.price}</p>
+                    <p ><span className="font-bold">Totla Enrolment:</span> {classes.enrolment}</p>
                     <div className="pt-10 flex gap-4 font-semibold">
                         {
                             classes?.photoURL ?
