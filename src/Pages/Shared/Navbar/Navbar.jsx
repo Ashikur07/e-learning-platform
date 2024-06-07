@@ -11,7 +11,7 @@ const Navbar = () => {
 
     const [userInfo, setUserInfo] = useState([]);
     useEffect(() => {
-        axios(`http://localhost:5000/users?email=${user?.email}`)
+        axios(`${import.meta.env.VITE_API_URL}/users?email=${user?.email}`)
             .then(res => {
                 setUserInfo(res.data);
             })

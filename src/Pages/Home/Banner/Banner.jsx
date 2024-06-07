@@ -3,6 +3,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import BannerContent from './BannerContent';
 
 
 const Banner = () => {
@@ -35,7 +36,7 @@ const Banner = () => {
                 centeredSlides={true}
                 loop={true}
                 autoplay={{
-                    delay: 4000,
+                    delay: 400000,
                     disableOnInteraction: false,
                 }}
                 pagination={{
@@ -47,26 +48,26 @@ const Banner = () => {
             >
 
                 <SwiperSlide>
-                    <div style={backgroud1} className='brightness-[85%] bg-no-repeat bg-cover bg-center lg:h-[650px] '>
+                    <div style={backgroud1} className='relative bg-no-repeat bg-cover bg-center lg:h-[650px] '>
                         {
-                          
+                          <BannerContent></BannerContent>
                         }
                     </div>
 
                 </SwiperSlide>
 
                 <SwiperSlide>
-                    <div style={backgroud2} className=' brightness-[85%] bg-no-repeat bg-cover bg-center lg:h-[650px]'>
+                    <div style={backgroud2} className='bg-no-repeat bg-cover bg-center lg:h-[650px]'>
                         {
-                            
+                            <BannerContent></BannerContent>
                         }
                     </div>
                 </SwiperSlide>
 
                 <SwiperSlide>
-                    <div style={backgroud3} className='brightness-[85%] bg-no-repeat bg-cover bg-center lg:h-[650px]'>
+                    <div style={backgroud3} className=' bg-no-repeat bg-cover bg-center lg:h-[650px]'>
                         {
-                            
+                            <BannerContent></BannerContent>
                         }
                     </div>
                 </SwiperSlide>

@@ -8,7 +8,7 @@ const AllClasses = () => {
 
     const [classes, setClasses] = useState();
     useEffect(() => {
-        axios(`http://localhost:5000/classes`)
+        axios(`${import.meta.env.VITE_API_URL}/classes`)
             .then(res => {
                 setClasses(res.data);
             })

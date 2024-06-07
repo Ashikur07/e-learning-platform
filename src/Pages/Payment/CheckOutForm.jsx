@@ -24,7 +24,7 @@ const CheckOutForm = ({ classes }) => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     // console.log(classes?.assignmentSubmited);
-    const submited = classes?.assignmentSubmited
+    const submited = classes?.assignmentSubmited;
 
     // match the user to auth data
     const { data: users = [] } = useQuery({
@@ -148,7 +148,7 @@ const CheckOutForm = ({ classes }) => {
                         icon: "success"
                     });
 
-                    axios.patch(`http://localhost:5000/classes/${classes._id}`,{ status: 'accepted' , enrolment: "1", assignmentSubmited: submited})
+                    axios.patch(`${import.meta.env.VITE_API_URL}/classes/${classes._id}`,{ status: 'accepted' , enrolment: "1", assignmentSubmited: submited})
                     .then(res =>{
                         console.log(res.data);
                         navigate('/dashboard/myEnrollClass');

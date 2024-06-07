@@ -10,21 +10,25 @@ import axios from 'axios';
 
 
 const Feedback = () => {
-    const [feedback, setFeedback] = useState([]);
+    const [feedbacks, setFeedbacks] = useState([]);
 
     useEffect(() => {
-        axios('http://localhost:5000/feedback')
-            .then(res =>setFeedback(res.data))
+        axios(`${import.meta.env.VITE_API_URL}/feedback`)
+            .then(res => {
+                setFeedbacks(res.data);
+            })
     }, [])
-    
+
+    console.log(feedbacks);
+
     return (
         <div className="mt-20 pt-10  pb-20 mx-auto bg-slate-300">
 
             <h1 className='text-4xl pb-10 font-semibold text-center'>User Feedback</h1>
-           
+
             <Swiper navigation={true} modules={[Navigation]} loop={true} className="max-w-5xl mySwiper">
                 {
-                    feedback.map(review => <SwiperSlide
+                    feedbacks.map(review => <SwiperSlide
                         key={review._id}
                     >
                         <div className="flex flex-col items-center mx-24 text-center space-y-3">

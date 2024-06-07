@@ -19,12 +19,13 @@ import ClassDetails from "../Pages/ClassDetails/ClassDetails";
 import Payment from "../Pages/Payment/Payment";
 import AprovedClassDetails from "../Pages/Dashboard/Teacher/AprovedClassDetails/AprovedClassDetails";
 import EnrollClassDetails from "../Pages/Dashboard/Student/EnrollClassDetails/EnrollClassDetails";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Main></Main>,
-
+        errorElement:<ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -49,12 +50,12 @@ const router = createBrowserRouter([
             {
                 path: '/classDetails/:id',
                 element: <PrivateRoute><ClassDetails></ClassDetails></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/classes/${params.id}`),
             },
             {
                 path: '/payment/:id',
                 element: <PrivateRoute><Payment></Payment></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/classes/${params.id}`),
             },
             
         ]
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
     {
         path: "/dashboard",
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        errorElement:<ErrorPage></ErrorPage>,
         children: [
             // common
             {
@@ -95,12 +97,12 @@ const router = createBrowserRouter([
             {
                 path: 'update/:id',
                 element: <UpdateClass></UpdateClass>,
-                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/classes/${params.id}`),
             },
             {
                 path: 'details/:id',
                 element: <AprovedClassDetails></AprovedClassDetails>,
-                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`),
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/classes/${params.id}`),
             },
 
             // for student routes
@@ -111,7 +113,7 @@ const router = createBrowserRouter([
             {
                 path:'enrollClassDetails/:id',
                 element: <EnrollClassDetails></EnrollClassDetails>,
-                loader: ({ params }) => fetch(`http://localhost:5000/payments/${params.id}`),
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/payments/${params.id}`),
             }
         ]
     }
