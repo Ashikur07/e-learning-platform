@@ -22,10 +22,11 @@ const AddClass = () => {
         const status = "pending";
         const enrolment = 0;
         const photoURL = user?.photoURL;
-        console.log(title, image, price, name, email, description, status, enrolment , photoURL);
+        const assignmentSubmited = 0;
+        console.log(title, image, price, name, email, description, status, enrolment , photoURL, assignmentSubmited);
 
         const classInfo = {
-            title, image, price, name, email, description, status, enrolment, photoURL
+            title, image, price, name, email, description, status, enrolment, photoURL, assignmentSubmited
         }
 
         axiosPublic.post('/classes', classInfo)

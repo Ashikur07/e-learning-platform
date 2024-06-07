@@ -1,23 +1,17 @@
 import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const email = user?.email;
+    console.log(email);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [theme, setTheme] = useState('light');
 
-    const [userInfo, setUserInfo] = useState([]);
-    useEffect(() => {
-        axios(`${import.meta.env.VITE_API_URL}/users?email=${user?.email}`)
-            .then(res => {
-                setUserInfo(res.data);
-            })
-    }, [])
-
-    console.log(userInfo[0]?.role);
+  
 
     const handleToggle = e => {
         if (e.target.checked) {
@@ -27,7 +21,6 @@ const Navbar = () => {
             setTheme('light')
         }
     }
-
 
 
     const handleLogOut = () => {
@@ -95,7 +88,7 @@ const Navbar = () => {
                         >
                             <summary className="avatar mt-1 cursor-pointer" >
                                     <div className="w-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                        <img src={user.photoURL} />
+                                        <img src={user?.photoURL} />
                                     </div>
                             </summary>
 
@@ -103,16 +96,7 @@ const Navbar = () => {
                                 <p>{user?.displayName}</p>
                                 <div className="space-y-3">
                                     <button className="bg-slate-800 py-2 px-3 rounded-md font-semibold w-full"><Link
-                                        to={
-                                            // userInfo[0]?.role === 'teacher' && '/dashboard/myClass'
-                                            // ||
-                                            // userInfo[0]?.role === 'admin' && '/dashboard/teacherRequest'
-                                            // ||
-                                            // userInfo[0]?.role === 'student' && '/dashboard/myEnrollClass'
-                                            '/dashboard'
-                                        }
-
-                                    >Dashboard</Link></button><br />
+                                        to={'/dashboard'}>Dashboard</Link></button><br />
                                     <button onClick={handleLogOut} className="bg-slate-800 w-full py-2 px-3 rounded-md font-semibold">Logout</button>
                                 </div>
                             </div>
