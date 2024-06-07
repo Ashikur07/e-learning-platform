@@ -77,9 +77,10 @@ const EnrollClassDetails = () => {
         const ratings = e.target.ratings.value;
         const email = user?.email;
         const name = user?.displayName;
+        const image = user?.photoURL;
 
-        console.log(description, ratings, email, name);
-        const feedback = {description, ratings, email, name};
+        console.log(description, ratings, email, name, image);
+        const feedback = {description, ratings, email, name , image};
         axiosPublic.post('/feedback', feedback)
         .then(res =>{
             console.log(res.data);

@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="mb-0">
             <footer className="pb-4 lg:pb-14 footer-border text-white footer lg:pl-40 p-10 bg-[#002147] text-base">
             <aside className="text-center ml-8 lg:ml-0">
-                    <img className="w-16 rounded-md ml-[88px]" src="https://i.ibb.co/w7g68hB/creative-logo-with-pencil-surrounded-by-bright-feathers-780672-39.jpg" alt="" />
+                    <img className="w-16 rounded-md ml-[88px]" src="https://i.ibb.co/rxmN4Qx/360-F-507665856-d-FXIKJJ4-Sw-ROG0df8-GNPBhqs-ZV44p6jn.jpg" alt="" />
                     <p className=""><span className="text-2xl">LearnQuest</span><br />Providing reliable tech since 1992</p>
                 </aside>
 

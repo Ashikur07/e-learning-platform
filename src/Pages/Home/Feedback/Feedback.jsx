@@ -39,7 +39,14 @@ const Feedback = () => {
                             />
 
                             <p>{review.description}</p>
-                            <h3 className="text-2xl text-orange-400">{review.name}</h3>
+                            <div className='flex gap-3 items-center py-2'>
+                                <div className="avatar">
+                                    <div className="w-14 rounded-full">
+                                        <img src={review?.photoURL} />
+                                    </div>
+                                </div>
+                                <h3 className="text-2xl pr-10 text-orange-400">{review.name}</h3>
+                            </div>
                         </div>
                     </SwiperSlide>)
                 }

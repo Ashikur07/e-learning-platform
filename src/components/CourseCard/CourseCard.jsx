@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 const CourseCard = ({course}) => {
@@ -13,7 +14,7 @@ const CourseCard = ({course}) => {
 
                     <div className="flex justify-between pt-5 items-center">
                         <p className="text-lg"><span className="text-[#d66e3e] font-extrabold">$ {price}</span> <strike>$ 500</strike></p>
-                        <button className="bg-[#0B7077] p-2 px-3 rounded-lg text-white">Enroll Now</button>
+                        <Link to='/allclasses'><button className="bg-[#0B7077] p-2 px-3 rounded-lg text-white">Enroll Now</button></Link>
                     </div>
                 </div>
             </div>
