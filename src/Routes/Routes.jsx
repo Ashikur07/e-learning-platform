@@ -20,6 +20,7 @@ import Payment from "../Pages/Payment/Payment";
 import AprovedClassDetails from "../Pages/Dashboard/Teacher/AprovedClassDetails/AprovedClassDetails";
 import EnrollClassDetails from "../Pages/Dashboard/Student/EnrollClassDetails/EnrollClassDetails";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import Contract from "../Pages/Contract/Contract";
 
 const router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
                 element: <PrivateRoute><Payment></Payment></PrivateRoute>,
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/classes/${params.id}`),
             },
+            {
+                path:'/contract',
+                element:<Contract></Contract>,
+            }
             
         ]
     },

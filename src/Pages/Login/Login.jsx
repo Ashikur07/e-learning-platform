@@ -70,9 +70,9 @@ const Login = () => {
             .catch(() => {
                 // alert('Email or password does not match...! Plese try again')
                 Swal.fire({
-                    title: "Login Successfull..!",
-                    icon: "success",
-                    timer: 1500,
+                    title: "Email or password does not match...! Plese try again",
+                    icon: "error",
+                    timer: 2500,
                 });
             })
     }
