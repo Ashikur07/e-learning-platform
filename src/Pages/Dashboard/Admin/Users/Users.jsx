@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Heading from "../../../../components/Heading/Heading";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 
 const Users = () => {
+
+    useEffect(() => {
+        document.title = 'Dashboard | Users';
+    }, []);
+
+
     const axiosSecure = useAxiosSecure();
     const [page, setPage] = useState(1);
     const limit = 10;

@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import Heading from "../Heading/Heading";
 
 const Profile = () => {
     const { user } = useAuth();
+
+    useEffect(() => {
+        document.title = 'Profile';
+    }, []);
+
 
     return (
         <div>      

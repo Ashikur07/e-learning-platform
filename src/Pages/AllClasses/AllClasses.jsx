@@ -4,6 +4,11 @@ import Heading from "../../components/Heading/Heading";
 import ClassCard from "./ClassCard";
 
 const AllClasses = () => {
+
+    useEffect(() => {
+        document.title = 'All Classes';
+    }, []);
+
     const [classes, setClasses] = useState([]);
     const [page, setPage] = useState(1);
     const limit = 10;

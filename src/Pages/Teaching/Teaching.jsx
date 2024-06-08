@@ -3,14 +3,18 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Teaching = () => {
+
+    useEffect(() => {
+        document.title = 'Teach on LearnQuest';
+    }, []);
+
 
     const { user } = useAuth();
     console.log(user);
     const axiosPublic = useAxiosPublic();
-    const navigate = useNavigate();
 
     const axiosSecure = useAxiosSecure();
     const { data: users = [] } = useQuery({
@@ -85,6 +89,7 @@ const Teaching = () => {
                         icon: "success"
                     });
                     form.reset();
+
                 })
         }
 

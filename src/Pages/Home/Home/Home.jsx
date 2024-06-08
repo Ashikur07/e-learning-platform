@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import AdditionalInformation from "../AdditionalInformation/AdditionalInformation";
 import Banner from "../Banner/Banner";
 import Contract from "../Contract/Contract";
@@ -9,6 +10,11 @@ import TeacherTraining from "../TeacherTraining/TeacherTraining";
 
 
 const Home = () => {
+
+    useEffect(() => {
+        document.title = 'Home';
+    }, []);
+
     return (
         <div>
             <Banner></Banner>

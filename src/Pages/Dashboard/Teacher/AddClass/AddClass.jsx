@@ -3,8 +3,14 @@ import Heading from "../../../../components/Heading/Heading";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const AddClass = () => {
+
+    useEffect(() => {
+        document.title = 'Dashborad | Add Class';
+    }, []);
+
 
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();

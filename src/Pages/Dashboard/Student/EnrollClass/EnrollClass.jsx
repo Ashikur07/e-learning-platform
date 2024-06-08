@@ -1,20 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Heading from "../../../../components/Heading/Heading";
 import useAuth from "../../../../hooks/useAuth";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import EnrollClassCard from "./EnrollClassCard";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const EnrollClass = () => {
+
+    useEffect(() => {
+        document.title = 'Dashboard | My Enroll Class';
+    }, []);
+
+
     const { user } = useAuth();
-    const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
     const [page, setPage] = useState(1);
     const limit = 10;
 
     const { data: classes = [], refetch } = useQuery({
         queryKey: ['classes'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/payments?studentEmail=${user.email}`);
+            const res = await axiosPublic.get(`/payments?studentEmail=${user.email}`);
             return res.data;
         }
     });

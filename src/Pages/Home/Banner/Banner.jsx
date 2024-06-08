@@ -36,7 +36,7 @@ const Banner = () => {
                 centeredSlides={true}
                 loop={true}
                 autoplay={{
-                    delay: 4000,
+                    delay: 400000,
                     disableOnInteraction: false,
                 }}
                 pagination={{
@@ -48,7 +48,7 @@ const Banner = () => {
             >
 
                 <SwiperSlide>
-                    <div style={backgroud1} className='relative bg-no-repeat bg-cover bg-center lg:h-[650px] '>
+                    <div style={backgroud1} className='bg-no-repeat bg-cover bg-center lg:h-[650px] '>
                         {
                           <BannerContent></BannerContent>
                         }

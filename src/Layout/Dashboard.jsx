@@ -135,7 +135,7 @@ const Dashboard = () => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to='/Contact'>
+                        <NavLink to='/contract'>
                             <FaEnvelope />
                             Contact
                         </NavLink>

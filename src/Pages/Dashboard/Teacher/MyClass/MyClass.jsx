@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Heading from "../../../../components/Heading/Heading";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
@@ -7,6 +7,12 @@ import MyCourseCard from "./MyCourseCard";
 import Swal from "sweetalert2";
 
 const MyClass = () => {
+
+    useEffect(() => {
+        document.title = 'Dashborad | My Class';
+    }, []);
+
+
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [page, setPage] = useState(1);
