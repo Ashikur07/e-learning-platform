@@ -1,3 +1,24 @@
+# website name & Live link
+Website Name : LearnQuest
+Live link : https://assignment-12-by-ashik.netlify.app
+
+# Test My website now
+admin email: admin@gmail.com
+admin password : Admin@
+
+# Feature and Charactristics of my website :
+1. User Authentication and Role Management
+2. Course Enrollment and Dashboard
+3. Course Creation and Approval
+4. Assignment Management
+5. Admin Control Panel
+6. Student Feedback and Reviews
+7. Payment Integration
+8. Notifications and Alerts
+9. Interactive Learning Tools
+10. Analytics and Reporting 
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
