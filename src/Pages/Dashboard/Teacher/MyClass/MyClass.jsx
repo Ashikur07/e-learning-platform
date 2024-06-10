@@ -62,7 +62,7 @@ const MyClass = () => {
     return (
         <div className="mb-24">
             <Heading title="My Class" />
-            <div className="max-w-[1100px] mx-auto grid grid-cols-3 gap-5 mt-10 justify-center mb-20">
+            <div className="max-w-[1100px] mx-5 lg:mx-auto grid lg:grid-cols-3 gap-5 mt-5 lg:mt-10 justify-center mb-20">
                 {currentData.map(clas => (
                     <MyCourseCard
                         key={clas._id}

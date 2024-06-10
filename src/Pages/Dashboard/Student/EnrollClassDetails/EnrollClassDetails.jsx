@@ -94,9 +94,9 @@ const EnrollClassDetails = () => {
         <div>
             <Heading title='Class Details'></Heading>
 
-            <div className="text-center  my-7 ">
-                <h1 className="ml-72 inline text-4xl font-semibold text-center">Posted Assignment</h1>
-                <button onClick={handleAddFeeback} className="ml-60 btn btn-primary text-white rounded-3xl"><FaPlus className="inline"></FaPlus> Create</button>
+            <div className="text-center  my-3 lg:my-7 ">
+                <h1 className="lg:ml-72 inline text-4xl font-semibold text-center">Posted Assignment</h1>
+                <button onClick={handleAddFeeback} className="ml-20 lg:ml-60 btn btn-primary text-white rounded-3xl"><FaPlus className="inline"></FaPlus> Create</button>
             </div>
 
             <div className="mb-20 overflow-x-auto max-w-6xl mx-auto border-2 shadow-2xl">

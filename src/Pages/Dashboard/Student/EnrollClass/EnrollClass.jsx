@@ -33,7 +33,7 @@ const EnrollClass = () => {
     return (
         <div className="mb-24">
             <Heading title="My Enroll Classes" />
-            <div className="pb-5 px-10 grid grid-cols-3 max-w-6xl mx-auto gap-5 mt-10">
+            <div className="pb-5 px-5 lg:px-10 grid lg:grid-cols-3 max-w-6xl mx-auto gap-5 mt-10">
                 {currentData.map(clas => (
                     <EnrollClassCard key={clas._id} clas={clas} />
                 ))}

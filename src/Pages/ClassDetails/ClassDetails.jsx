@@ -6,14 +6,14 @@ const ClassDetails = () => {
     console.log(classes);
 
     return (
-        <div className="mt-10 pb-24">
-            <div className="shadow-2xl max-w-6xl mx-auto flex">
+        <div className="lg:mt-10 pb-24">
+            <div className="shadow-2xl max-w-6xl mx-auto flex flex-col lg:flex-row">
 
-                <div className="flex-1">
-                    <img className="h-full" src={classes?.image} alt="" />
+                <div className="lg:flex-1">
+                    <img className="w-full h-full" src={classes?.image} alt="" />
                 </div>
 
-                <div className="bg-blue-200 flex-1 p-10 text-lg">
+                <div className="bg-blue-200 lg:flex-1 p-10 text-lg">
                     <h1 className="text-4xl font-bold pb-2">{classes.title}</h1>
                     <p className="pb-5 text-lg"><span className="font-bold">Description:</span> {classes.description}</p>
                     <p><span className="font-bold">Price:</span> ${classes.price}</p>

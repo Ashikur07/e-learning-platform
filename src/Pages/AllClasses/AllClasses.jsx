@@ -27,10 +27,10 @@ const AllClasses = () => {
     const currentData = adminAproveClasses.slice((page - 1) * limit, page * limit);
 
     return (
-        <div className="mb-40">
-            <div className="my-10">
+        <div className="mb-20 lg:mb-40">
+            <div className="lg:my-10">
                 <Heading title='All Class Here' />
-                <div className="grid grid-cols-3 gap-5 max-w-6xl mx-auto my-10">
+                <div className="grid lg:grid-cols-3 gap-5 max-w-6xl mx-auto my-10 px-5 lg:px-0">
                     {currentData.map(clas => (
                         <ClassCard key={clas._id} clas={clas} />
                     ))}

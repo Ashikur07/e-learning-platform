@@ -40,10 +40,10 @@ const AdditionalInformation = () => {
 
 
     return (
-        <div className="flex mt-20">
+        <div className="lg:flex mt-20">
 
             <div className="flex-1 bg-slate-500">
-                <div className="flex justify-center pt-40 gap-6">
+                <div className="space-y-5 lg:space-y-0 mx-10 lg:mx-0  lg:flex justify-center py-10 lg:py-0 lg:pt-40 gap-6">
                     <div className="p-7 bg-white text-center flex flex-col items-center gap-3 rounded-xl">
                         <FaUsers className="text-4xl text-blue-700"></FaUsers>
                         <p className="text-4xl font-bold">{users.length}</p>

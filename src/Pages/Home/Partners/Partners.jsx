@@ -2,12 +2,12 @@
 const Partners = () => {
     return (
         <div className="mt-20 mb-32 max-w-6xl mx-auto">
-            <div className="text-center pb-3">
+            <div className="text-center lg:pb-3">
                 <p className="text-[#e96223] font-bold text-xl">Our Partners</p>
                 <h1 className="text-4xl font-semibold">Meet Our Partners</h1>
             </div>
 
-            <div className="grid grid-cols-4 gap-y-6 items-center">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 items-center">
                 {/* logo1 */}
                 <div className="flex flex-col items-center pt-6">
                     <img className="w-32" src="https://i.ibb.co/d50WH34/DB2019-AL01950-web-1600.jpg" alt="" />

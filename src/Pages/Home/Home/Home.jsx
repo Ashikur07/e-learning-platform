@@ -7,6 +7,7 @@ import Partners from "../Partners/Partners";
 import PopularCourses from "../PopularCourses/PopularCourses";
 import StartTeaching from "../StartTeaching/StartTeaching";
 import TeacherTraining from "../TeacherTraining/TeacherTraining";
+import Motion from "../Motion/Motion";
 
 
 const Home = () => {

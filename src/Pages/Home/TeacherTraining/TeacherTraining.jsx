@@ -1,12 +1,12 @@
 
 const TeacherTraining = () => {
     return (
-        <div className="max-w-6xl mx-auto flex gap-10 items-center">
+        <div className="max-w-6xl lg:mx-auto lg:flex gap-10 items-center ">
             <div>
                 <img src="https://i.ibb.co/qdbwQgV/image.png" alt="" />
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 px-6 lg:px-0">
                 <h1 className="text-4xl pb-5 font-bold text-orange-500">Teacher Training</h1>
                 <div className="pl-1 flex items-center gap-2">
                     <img src="https://i.ibb.co/MpkqHFw/image.png" alt="" />

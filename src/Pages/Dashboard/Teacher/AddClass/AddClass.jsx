@@ -53,7 +53,7 @@ const AddClass = () => {
         <div>
             <Heading title="Add a new Class"></Heading>
 
-            <div className="max-w-3xl mx-auto mt-10 mb-20 bg-base-300 shadow-2xl gap-5">
+            <div className="max-w-3xl mx-auto lg:mt-10 mb-20 bg-base-300 shadow-2xl gap-5">
 
                 {/* form start */}
                 <form onSubmit={handleSubmit} className="p-10">

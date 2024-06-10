@@ -81,7 +81,7 @@ const AllClass = () => {
                                         </div>
                                     </div>
                                 </td>
-                                <td>{clas.title}</td>
+                                <td className="max-w-40">{clas.title}</td>
                                 <td className="max-w-56">{clas.description}</td>
                                 <td>{clas.email}</td>
                                 <td>

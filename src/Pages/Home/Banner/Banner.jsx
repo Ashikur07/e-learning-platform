@@ -36,7 +36,7 @@ const Banner = () => {
                 centeredSlides={true}
                 loop={true}
                 autoplay={{
-                    delay: 400000,
+                    delay: 4000,
                     disableOnInteraction: false,
                 }}
                 pagination={{
@@ -48,7 +48,7 @@ const Banner = () => {
             >
 
                 <SwiperSlide>
-                    <div style={backgroud1} className='bg-no-repeat bg-cover bg-center lg:h-[650px] '>
+                    <div style={backgroud1} className='bg-no-repeat bg-cover bg-center h-[350px] lg:h-[650px] '>
                         {
                           <BannerContent></BannerContent>
                         }
@@ -57,7 +57,7 @@ const Banner = () => {
                 </SwiperSlide>
 
                 <SwiperSlide>
-                    <div style={backgroud2} className='bg-no-repeat bg-cover bg-center lg:h-[650px]'>
+                    <div style={backgroud2} className='bg-no-repeat bg-cover bg-center h-[350px] lg:h-[650px]'>
                         {
                             <BannerContent></BannerContent>
                         }
@@ -65,7 +65,7 @@ const Banner = () => {
                 </SwiperSlide>
 
                 <SwiperSlide>
-                    <div style={backgroud3} className=' bg-no-repeat bg-cover bg-center lg:h-[650px]'>
+                    <div style={backgroud3} className=' bg-no-repeat bg-cover bg-center h-[350px] lg:h-[650px]'>
                         {
                             <BannerContent></BannerContent>
                         }

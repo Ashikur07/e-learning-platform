@@ -63,7 +63,7 @@ const Users = () => {
                 <table className="table">
                     <thead className="bg-[#FB923C] text-xl text-black">
                         <tr>
-                            <th></th>
+                            <th className="hidden lg:block"></th>
                             <th></th>
                             <th>Image</th>
                             <th>Name</th>
@@ -74,7 +74,7 @@ const Users = () => {
                     <tbody>
                         {currentData.map(user => (
                             <tr key={user._id} className="text-base">
-                                <td></td>
+                                <td className="hidden lg:block"></td>
                                 <td></td>
                                 <td>
                                     <div className="avatar">

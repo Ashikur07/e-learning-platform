@@ -97,13 +97,13 @@ const Teaching = () => {
 
     return (
         <div>
-            <div className="max-w-7xl mx-auto mt-10 mb-20 flex border gap-5">
-                <div className="w-[60%]">
+            <div className="max-w-7xl mx-auto lg:mt-10 mb-20 lg:flex border gap-5">
+                <div className="lg:w-[60%]">
                     <img className="h-full brightness-75" src="https://i.ibb.co/NtMMV8D/photo-1515378791036-0648a3ef77b2-q-80-w-2070-auto-format-fit-crop-ixlib-rb-4-0.jpg" alt="" />
                 </div>
 
                 {/* form start */}
-                <form onSubmit={handleSubmit} className="p-10 w-[40%]">
+                <form onSubmit={handleSubmit} className="p-10 lg:w-[40%]">
                     <h1 className="text-2xl font-medium pb-6">APPLY NOW</h1>
 
                     <div className="mb-4">

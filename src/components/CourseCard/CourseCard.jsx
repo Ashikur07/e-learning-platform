@@ -5,7 +5,7 @@ const CourseCard = ({course}) => {
     const {image, title, description, enrol_date, price} = course;
     return (
         <div>
-            <div className="w-[300px] shadow-2xl rounded-xl">
+            <div className="lg:w-[300px] shadow-2xl rounded-xl">
                 <img className="w-full h-52 rounded-t-xl" src={image} alt="" />
                 <div className="p-6">
                     <p className="text-sm">{enrol_date}</p>

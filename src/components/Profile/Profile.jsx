@@ -17,10 +17,10 @@ const Profile = () => {
             }
 
             {/* details */}
-            <div className="flex gap-16 justify-center items-center bg-slate-600 mt-32 p-10 max-w-2xl mx-auto">
+            <div className="flex flex-col lg:flex-row gap-5 lg:gap-16 justify-center items-center bg-slate-600 mt-10 lg:mt-32 p-10 lg:max-w-2xl lg:mx-auto">
 
                 <div className="avatar">
-                    <div className="w-40 hover:w-52 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <div className="w-40 hover:w-52 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mr-10 lg:mr-0">
                         <img src={user?.photoURL} />
                     </div>
                 </div>

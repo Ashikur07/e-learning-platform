@@ -13,7 +13,7 @@
         "title": "BM Data Science Professional Certificate",
         "description": "Product Management Masterclass, you will learn with Sarah Johnson - Head of Product Customer Platform Gojek Indonesia.",
         "enrol_date": "5-28 june 2024",
-        "price": 678
+        "price": 100
     },
     {
         "id": 3,
@@ -29,6 +29,6 @@
         "title": "Python for Everybody Specialization",
         "description": "Product Management Masterclass, you will learn with Sarah Johnson - Head of Product Customer Platform Gojek Indonesia.",
         "enrol_date": "1-28 june 2024",
-        "price": 567
+        "price": 80
     }
 ]

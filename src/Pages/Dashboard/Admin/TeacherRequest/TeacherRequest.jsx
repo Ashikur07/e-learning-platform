@@ -125,7 +125,7 @@ const TeacherRequest = () => {
             </div>
 
             {/* Pagination Controls */}
-            <div className="flex justify-center mt-5">
+            <div className="flex justify-center mt-5 mb-5 space-x-2">
                 <button
                     onClick={() => setPage(prev => Math.max(prev - 1, 1))}
                     className="mx-1 px-3 py-1 rounded bg-gray-200"

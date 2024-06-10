@@ -52,14 +52,14 @@ const AprovedClassDetails = () => {
         <div>
             <Heading title='Course Details'></Heading>
 
-            <div className="my-10">
+            <div className="my-5 lg:my-10">
                 <h1 className="mb-5 text-center text-orange-500 text-4xl font-semibold">Class Progress</h1>
 
-                <div className="relative flex justify-center max-w-5xl mx-auto bg-orange-400 h-96">
+                <div className="relative flex justify-center pt-14 lg:pt-0 pb-10 lg:pb-0 max-w-5xl mx-auto bg-orange-400 lg:h-96">
 
-                    <button onClick={handleAddAssignment} className="m-3 hover:bg-green-900 text-lg absolute right-0 btn bg-green-700 border-none text-white"><FaPlus className="text-xl"></FaPlus> Create</button>
+                    <button onClick={handleAddAssignment} className="top-1 lg:m-3 hover:bg-green-900 text-lg absolute right-0 btn bg-green-700 border-none text-white"><FaPlus className="text-xl"></FaPlus> Create</button>
 
-                    <div className="items-center flex justify-center gap-6">
+                    <div className="items-center flex flex-col lg:flex-row justify-center gap-6">
                         <div className="py-6 px-10 bg-white text-center flex flex-col items-center gap-3 rounded-xl">
                             <FaUsers className="text-4xl text-blue-700"></FaUsers>
                             <p className="text-4xl font-bold">{aprovedClass.enrolment}</p>

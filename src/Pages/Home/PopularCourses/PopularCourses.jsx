@@ -14,9 +14,9 @@ const PopularCourses = () => {
 
     return (
         <div className="my-20 max-w-7xl mx-auto">
-            <h1 className="text-5xl text-[#e96223] font-bold text-center">Popular Courses</h1>
+            <h1 className="text-4xl lg:text-5xl text-[#e96223] font-bold text-center">Popular Courses</h1>
 
-            <div className="flex justify-around mt-10">
+            <div className="flex flex-col lg:flex-row justify-around mt-10 mx-5 lg:mx-0 gap-6 lg:gap-0">
                 {
                     courses.map(course => <CourseCard 
                     key={course.id}

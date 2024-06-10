@@ -66,8 +66,8 @@ const Navbar = () => {
                     )}
                 </div>
                 <Link to="/" className="flex items-center gap-2" onClick={closeDropdown}>
-                    <img className="w-14 rounded-full" src="https://i.ibb.co/rxmN4Qx/360-F-507665856-d-FXIKJJ4-Sw-ROG0df8-GNPBhqs-ZV44p6jn.jpg" alt="" />
-                    <h1 className="text-lg lg:text-4xl font-bold ">LearnQuest</h1>
+                    <img className="hidden lg:block w-14 rounded-full" src="https://i.ibb.co/rxmN4Qx/360-F-507665856-d-FXIKJJ4-Sw-ROG0df8-GNPBhqs-ZV44p6jn.jpg" alt="" />
+                    <h1 className="text-xl lg:text-4xl font-bold ">LearnQuest</h1>
                 </Link>
             </div>
 
