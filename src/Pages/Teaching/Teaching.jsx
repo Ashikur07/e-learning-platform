@@ -4,6 +4,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 const Teaching = () => {
 
@@ -11,7 +12,7 @@ const Teaching = () => {
         document.title = 'Teach on LearnQuest';
     }, []);
 
-
+    const { register, handleSubmit, reset } = useForm();
     const { user } = useAuth();
     console.log(user);
     const axiosPublic = useAxiosPublic();
@@ -38,15 +39,15 @@ const Teaching = () => {
     console.log(applyforTeaching.length);
 
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        const form = e.target;
-        const name = form.name.value;
-        const image = form.image.value ? form.image.value : user.photoURL;
+    const onSubmit = async (data) => {
+        console.log(data);
+      
+        const name = data.name;
+        const image = data.image ? data.image : user.photoURL;
         const email = user?.email;
-        const title = form.title.value;
-        const experience = form.experience.value;
-        const category = form.category.value;
+        const title = data.title;
+        const experience = data.experience;
+        const category = data.category;
         const userId = users[0]?._id;
         const status = "pending";
 
@@ -60,6 +61,7 @@ const Teaching = () => {
                 title: "Already applied..!",
                 icon: "error"
             });
+            reset();
             return;
         }
         else if (users[0]?.role === "admin") {
@@ -68,6 +70,7 @@ const Teaching = () => {
                 text: "So You can not apply for teacher..!",
                 icon: "error"
             });
+            reset();
             return;
         }
         else if (users[0]?.role === "teacher") {
@@ -76,6 +79,7 @@ const Teaching = () => {
                 text: "So you no need to apply again ..!",
                 icon: "warning"
             });
+            reset();
             return;
         }
         else {
@@ -88,7 +92,7 @@ const Teaching = () => {
                         text: "Successfully applied for Teacher",
                         icon: "success"
                     });
-                    form.reset();
+                    reset();
 
                 })
         }
@@ -103,29 +107,29 @@ const Teaching = () => {
                 </div>
 
                 {/* form start */}
-                <form onSubmit={handleSubmit} className="p-10 lg:w-[40%]">
+                <form onSubmit={handleSubmit(onSubmit)} className="p-10 lg:w-[40%]">
                     <h1 className="text-2xl font-medium pb-6">APPLY NOW</h1>
 
                     <div className="mb-4">
                         <p className="pb-1">Full Name *</p>
-                        <input type="text" name="name" placeholder="Enter your name" className="input input-bordered w-full" required />
+                        <input type="text" {...register("name")} placeholder="Enter your name" className="input input-bordered w-full" required />
                     </div>
 
                     <div className="mb-4">
                         <p className="pb-1">Images (URL)</p>
-                        <input type="text" name="image" placeholder={user?.photoURL}
+                        <input type="text" {...register("image")} placeholder={user?.photoURL}
                             className="input input-bordered w-full text-[13px]" />
                     </div>
 
                     <div className="mb-4">
                         <p className="pb-1">Title</p>
-                        <input type="text" name="title" placeholder="Enter title here" className="input input-bordered w-full" required />
+                        <input type="text" {...register("title")} placeholder="Enter title here" className="input input-bordered w-full" required />
                     </div>
 
                     <div className="flex gap-6">
                         <div className="mb-4 w-full">
                             <p className="pb-1">Experience</p>
-                            <select name="experience" className="select select-bordered w-full max-w-xs">
+                            <select {...register("experience")} className="select select-bordered w-full max-w-xs">
                                 <option disabled selected>Select One</option>
                                 <option>beginner</option>
                                 <option>mid-level</option>
@@ -135,7 +139,7 @@ const Teaching = () => {
 
                         <div className="mb-4 w-full">
                             <p className="pb-1">Category</p>
-                            <select name="category" className="select select-bordered w-full max-w-xs">
+                            <select {...register("category")} className="select select-bordered w-full max-w-xs">
                                 <option disabled selected>Select your category</option>
                                 <option>Web Development</option>
                                 <option>Digital Marketing</option>
