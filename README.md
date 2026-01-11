@@ -16,7 +16,7 @@ admin password : Admin@
 7. Payment Integration
 8. Notifications and Alerts
 9. Interactive Learning Tools
-10. Analytics and Reporting 
+
 
 
 # React + Vite
