@@ -4,6 +4,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import { Autoplay, Pagination, Navigation, EffectFade } from 'swiper/modules';
+import { motion } from "framer-motion";
 
 const Banner = () => {
     const slides = [
@@ -26,6 +27,26 @@ const Banner = () => {
             desc: "Access a library of 1000+ courses covering every tech stack imaginable."
         }
     ];
+
+    // Animation Variants
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { 
+            opacity: 1, 
+            y: 0,
+            transition: { duration: 0.8, ease: "easeOut" }
+        }
+    };
+
+    const staggerContainer = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2
+            }
+        }
+    };
 
     return (
         <section className='relative mt-4 lg:mt-6 mx-2 lg:mx-[5%]'>
@@ -50,32 +71,38 @@ const Banner = () => {
                         >
                             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/20 lg:bg-gradient-to-r lg:from-black/90 lg:via-black/30 lg:to-transparent flex items-end lg:items-center">
                                 
-                                <div className="w-full container mx-auto px-6 md:px-12 lg:px-24 pb-12 lg:pb-0">
+                                <motion.div 
+                                    className="w-full container mx-auto px-6 md:px-12 lg:px-24 pb-12 lg:pb-0"
+                                    variants={staggerContainer}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: false, amount: 0.3 }} // Re-triggers when 30% is visible
+                                >
                                     <div className="max-w-4xl space-y-4 lg:space-y-8">
                                         
                                         {/* Tag */}
-                                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 backdrop-blur-md border border-primary/20">
+                                        <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 backdrop-blur-md border border-primary/20">
                                             <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                                             <span className="text-white font-bold tracking-[0.15em] text-[10px] lg:text-xs uppercase">
                                                 {slide.tag}
                                             </span>
-                                        </div>
+                                        </motion.div>
 
                                         {/* Title */}
-                                        <h1 className="text-4xl md:text-6xl lg:text-8xl font-black text-white leading-[1.1] tracking-tight">
+                                        <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-8xl font-black text-white leading-[1.1] tracking-tight">
                                             {slide.title.split(' ')[0]} <br className="hidden lg:block" />
                                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
                                                 {slide.title.split(' ').slice(1).join(' ')}
                                             </span>
-                                        </h1>
+                                        </motion.h1>
 
                                         {/* Desc */}
-                                        <p className="text-gray-300 text-sm md:text-lg lg:text-2xl max-w-2xl font-medium leading-relaxed opacity-90">
+                                        <motion.p variants={fadeInUp} className="text-gray-300 text-sm md:text-lg lg:text-2xl max-w-2xl font-medium leading-relaxed opacity-90">
                                             {slide.desc}
-                                        </p>
+                                        </motion.p>
 
-                                        {/* Corrected Button Group: Always side-by-side (pasapasi) */}
-                                        <div className="flex flex-row gap-3 md:gap-5 pt-4 lg:pt-6">
+                                        {/* Button Group */}
+                                        <motion.div variants={fadeInUp} className="flex flex-row gap-3 md:gap-5 pt-4 lg:pt-6">
                                             <button className="flex-1 sm:flex-none px-4 md:px-10 py-3 md:py-4 bg-primary text-white text-xs md:text-base font-extrabold rounded-xl md:rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/30">
                                                 Enroll Now
                                             </button>
@@ -83,22 +110,22 @@ const Banner = () => {
                                             <button className="flex-1 sm:flex-none px-4 md:px-10 py-3 md:py-4 border-2 border-white/20 text-white text-xs md:text-base font-bold rounded-xl md:rounded-2xl backdrop-blur-md hover:bg-white hover:text-black transition-all">
                                                 View Details
                                             </button>
-                                        </div>
+                                        </motion.div>
                                     </div>
-                                </div>
+                                </motion.div>
                             </div>
                         </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
 
+            {/* Same CSS as before */}
             <style jsx="true">{`
                 @media (max-width: 768px) {
                     .swiper-button-next, .swiper-button-prev {
                         display: none !important;
                     }
                 }
-                
                 .swiper-button-next, .swiper-button-prev {
                     color: white !important;
                     background: rgba(255, 255, 255, 0.05);
@@ -109,21 +136,17 @@ const Banner = () => {
                     border: 1px solid rgba(255, 255, 255, 0.1);
                     transition: all 0.3s ease;
                 }
-                
                 .swiper-button-next:hover, .swiper-button-prev:hover {
                     background: rgba(124, 58, 237, 0.2);
                     border-color: #7c3aed;
                 }
-
                 .swiper-button-next:after, .swiper-button-prev:after {
                     font-size: 20px !important;
                 }
-
                 .swiper-pagination-bullet {
                     background: white !important;
                     opacity: 0.5;
                 }
-
                 .swiper-pagination-bullet-active {
                     background: #7c3aed !important;
                     width: 30px !important;
