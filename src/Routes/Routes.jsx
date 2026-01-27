@@ -21,6 +21,7 @@ import AprovedClassDetails from "../Pages/Dashboard/Teacher/AprovedClassDetails/
 import EnrollClassDetails from "../Pages/Dashboard/Student/EnrollClassDetails/EnrollClassDetails";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Contract from "../Pages/Contract/Contract";
+import Test from "../components/Test/Test";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home></Home>
+            },
+            {
+                path: '/test',
+                element: <Test></Test>
             },
             {
                 path: '/login',
