@@ -1,127 +1,139 @@
 import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
-    const email = user?.email;
-    console.log(email);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [theme, setTheme] = useState('light');
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
-  
+    // Handle scroll effect for a modern sticky feel
+    useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 20);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
-    const handleToggle = e => {
-        if (e.target.checked) {
-            setTheme('dark')
-        }
-        else {
-            setTheme('light')
-        }
+    // Theme persist and apply
+    useEffect(() => {
+        document.querySelector('html').setAttribute('data-theme', theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    const handleToggle = (e) => {
+        setTheme(e.target.checked ? 'dark' : 'light');
     }
-
 
     const handleLogOut = () => {
         logOut()
             .then(() => {
                 Swal.fire({
-                    title: "Logout Successfull..!",
+                    title: "Logged Out",
+                    text: "See you again soon!",
                     icon: "success",
-                    timer: 2000,
+                    background: theme === 'dark' ? '#1f2937' : '#fff',
+                    color: theme === 'dark' ? '#fff' : '#000',
+                    showConfirmButton: false,
+                    timer: 1500,
                 });
-            })
-            .catch();
+            });
     };
 
-    const handleDropdownToggle = () => {
-        setIsDropdownOpen((prevState) => !prevState);
-    };
-
-    const closeDropdown = () => {
-        setIsDropdownOpen(false);
-    };
-
+    const navLinks = [
+        { name: 'Home', path: '/' },
+        { name: 'All Classes', path: '/allclasses' },
+        { name: 'Teach on LearnQuest', path: '/teaching' },
+    ];
 
     const links = (
         <>
-            <li className="font-semibold mr-1"><NavLink to='/'>Home</NavLink></li>
-            <li className="font-semibold mr-1"><NavLink to='/allclasses'>All Classes</NavLink></li>
-            <li className="font-semibold mr-1"><NavLink to='/teaching'>Teach on LearnQuest</NavLink></li>
+            {navLinks.map((link) => (
+                <li key={link.path}>
+                    <NavLink 
+                        to={link.path}
+                        className={({ isActive }) => 
+                            `relative px-3 py-2 transition-all duration-300 font-medium hover:text-primary ${
+                                isActive ? "text-primary border-b-2 border-primary" : "text-base-content"
+                            }`
+                        }
+                    >
+                        {link.name}
+                    </NavLink>
+                </li>
+            ))}
         </>
     );
 
     return (
-        <div className="navbar lg:px-[5%] shadow-xl bg-base-200">
-            <div className="navbar-start">
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden" onClick={handleDropdownToggle}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-                    </div>
-                    {isDropdownOpen && (
-                        <ul tabIndex={0} className="text-white menu menu-sm dropdown-content mt-3 z-[2] p-2 shadow bg-slate-700 rounded-box w-52">
+        <div className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+            isScrolled ? "bg-base-100/70 backdrop-blur-md shadow-lg py-2" : "bg-transparent py-4"
+        }`}>
+            <div className="navbar lg:px-[5%] container mx-auto">
+                {/* Navbar Start */}
+                <div className="navbar-start">
+                    <div className="dropdown">
+                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+                            </svg>
+                        </div>
+                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-4 shadow-2xl bg-base-200 rounded-2xl w-64 border border-base-300">
                             {links}
                         </ul>
+                    </div>
+                    <Link to="/" className="flex items-center gap-3 group">
+                        <div className="w-10 lg:w-12 overflow-hidden rounded-xl shadow-md group-hover:scale-110 transition-transform">
+                            <img src="https://i.ibb.co/rxmN4Qx/360-F-507665856-d-FXIKJJ4-Sw-ROG0df8-GNPBhqs-ZV44p6jn.jpg" alt="Logo" />
+                        </div>
+                        <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tighter bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                            LearnQuest
+                        </h1>
+                    </Link>
+                </div>
+
+                {/* Navbar Center */}
+                <div className="navbar-center hidden lg:flex">
+                    <ul className="flex gap-6">
+                        {links}
+                    </ul>
+                </div>
+
+                {/* Navbar End */}
+                <div className="navbar-end gap-4">
+                    {/* Theme Toggle */}
+                    <label className="swap swap-rotate hover:bg-base-300 p-2 rounded-full transition-colors">
+                        <input type="checkbox" onChange={handleToggle} checked={theme === 'dark'} />
+                        <svg className="swap-on fill-current w-6 h-6 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/></svg>
+                        <svg className="swap-off fill-current w-6 h-6 text-slate-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Z"/></svg>
+                    </label>
+
+                    {user ? (
+                        <div className="dropdown dropdown-end">
+                            <label tabIndex={0} className="btn btn-ghost btn-circle avatar border-2 border-primary p-0.5 shadow-sm">
+                                <div className="w-10 rounded-full">
+                                    <img src={user?.photoURL} alt="Profile" />
+                                </div>
+                            </label>
+                            <ul tabIndex={0} className="mt-3 z-[10] p-4 shadow-xl menu menu-sm dropdown-content bg-base-100 rounded-2xl w-52 border border-base-300 space-y-2">
+                                <div className="px-2 py-1 mb-2 border-b border-base-200">
+                                    <p className="font-bold text-primary truncate text-sm">{user?.displayName}</p>
+                                    <p className="text-[10px] opacity-60 truncate">{user?.email}</p>
+                                </div>
+                                <li><Link to="/dashboard" className="hover:bg-primary hover:text-white rounded-lg">Dashboard</Link></li>
+                                <li><button onClick={handleLogOut} className="hover:bg-error hover:text-white rounded-lg">Logout</button></li>
+                            </ul>
+                        </div>
+                    ) : (
+                        <Link to="/login">
+                            <button className="btn btn-primary btn-sm lg:btn-md rounded-xl px-6 font-bold shadow-lg shadow-primary/30 hover:scale-105 transition-transform">
+                                Login
+                            </button>
+                        </Link>
                     )}
                 </div>
-                <Link to="/" className="flex items-center gap-2" onClick={closeDropdown}>
-                    <img className="hidden lg:block w-14 rounded-full" src="https://i.ibb.co/rxmN4Qx/360-F-507665856-d-FXIKJJ4-Sw-ROG0df8-GNPBhqs-ZV44p6jn.jpg" alt="" />
-                    <h1 className="text-xl lg:text-4xl font-bold ">LearnQuest</h1>
-                </Link>
             </div>
-
-            <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
-                    {links}
-                </ul>
-            </div>
-
-            <div className="navbar-end space-x-5">
-
-                {user ? (
-
-                    <div className="flex gap-4 items-center">
-
-                        <details
-                            className="dropdown"
-                        >
-                            <summary className="avatar mt-1 cursor-pointer" >
-                                    <div className="w-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                        <img src={user?.photoURL} />
-                                    </div>
-                            </summary>
-
-                            <div className=" -left-20 lg:-left-12 top-12 lg:top-[59px] menu dropdown-content z-[10]  bg-slate-600 rounded-lg text-white w-[180px] p-4 space-y-3">
-                                <p>{user?.displayName}</p>
-                                <div className="space-y-3">
-                                    <button className="bg-slate-800 py-2 px-3 rounded-md font-semibold w-full"><Link
-                                        to={'/dashboard'}>Dashboard</Link></button><br />
-                                    <button onClick={handleLogOut} className="bg-slate-800 w-full py-2 px-3 rounded-md font-semibold">Logout</button>
-                                </div>
-                            </div>
-
-                        </details>
-
-                    </div>
-
-                ) : (
-                    <div className="lg:space-x-3 lg:flex">
-                        <NavLink to="/login" onClick={closeDropdown}>
-                            <button className="lg:text-lg font-bold nav-btn px-3 lg:px-4 py-2 rounded-xl bg-blue-900 hover:bg-blue-700 text-white">Login</button>
-                        </NavLink>
-                    </div>
-                )
-                }
-
-                {/* theme added */}
-                <label className=" cursor-pointer grid place-items-center">
-                    <input onChange={handleToggle} type="checkbox" value={theme} className="toggle theme-controller bg-base-content row-start-1 col-start-1 col-span-2" />
-                    <svg className="col-start-1 row-start-1 stroke-base-100 fill-base-100" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" /></svg>
-                    <svg className="col-start-2 row-start-1 stroke-base-100 fill-base-100" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </label>
-            </div >
-        </div >
+        </div>
     );
 };
 
