@@ -1,16 +1,37 @@
 import { Link } from "react-router-dom";
-import { HiArrowRight, HiOutlineCalendar } from "react-icons/hi"; // icons use korle premium lage
+import { HiArrowRight, HiOutlineCalendar } from "react-icons/hi";
+import { motion } from "framer-motion";
 
 const CourseCard = ({ course }) => {
     const { image, title, description, enrol_date, price } = course;
 
+    // Card Item Animation
+    const itemVariants = {
+        hidden: { opacity: 0, scale: 0.9, y: 30 },
+        visible: { 
+            opacity: 1, 
+            scale: 1, 
+            y: 0,
+            transition: { duration: 0.5, ease: "easeOut" }
+        }
+    };
+
     return (
-        <div className="group bg-base-100 rounded-[2.5rem] p-4 border border-base-200 hover:border-primary/30 transition-all duration-500 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.08)] flex flex-col h-full">
+        <motion.div 
+            variants={itemVariants}
+            whileHover={{ 
+                y: -10,
+                transition: { duration: 0.3 }
+            }}
+            className="group bg-base-100 rounded-[2.5rem] p-4 border border-base-200 hover:border-primary/30 transition-all duration-500 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.08)] flex flex-col h-full"
+        >
             
-            {/* Image Section with a modern mask/shape */}
+            {/* Image Section */}
             <div className="relative overflow-hidden rounded-[2rem] h-52">
-                <img 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                <motion.img 
+                    whileHover={{ scale: 1.15 }}
+                    transition={{ duration: 0.7 }}
+                    className="w-full h-full object-cover" 
                     src={image} 
                     alt={title} 
                 />
@@ -22,17 +43,15 @@ const CourseCard = ({ course }) => {
 
             {/* Content Section */}
             <div className="px-3 pt-6 pb-2 flex flex-col flex-grow">
-                {/* Minimal Title */}
                 <h1 className="text-xl font-extrabold text-base-content leading-tight mb-3 group-hover:text-primary transition-colors">
                     {title}
                 </h1>
 
-                {/* Light Description */}
                 <p className="text-sm text-base-content/60 font-medium line-clamp-2 mb-6 flex-grow">
                     {description}
                 </p>
 
-                {/* Footer Section: Clean & Spacious */}
+                {/* Footer Section */}
                 <div className="flex items-center justify-between mt-auto">
                     <div className="flex flex-col">
                         <span className="text-[10px] font-black text-[#e96223] uppercase tracking-widest opacity-70">Price</span>
@@ -43,13 +62,17 @@ const CourseCard = ({ course }) => {
                     </div>
 
                     <Link to='/allclasses'>
-                        <button className="h-12 w-12 rounded-2xl bg-base-content text-base-100 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 shadow-lg shadow-gray-200 dark:shadow-none group-hover:rotate-[-45deg]">
+                        <motion.button 
+                            whileHover={{ rotate: -45, scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="h-12 w-12 rounded-2xl bg-base-content text-base-100 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 shadow-lg"
+                        >
                             <HiArrowRight className="text-xl" />
-                        </button>
+                        </motion.button>
                     </Link>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
