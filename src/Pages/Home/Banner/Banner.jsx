@@ -48,13 +48,12 @@ const Banner = () => {
                             className="relative w-full h-full bg-cover bg-center"
                             style={{ backgroundImage: `url(${slide.image})` }}
                         >
-                            {/* Adaptive Overlay: Mobile-e ektu beshi dark jate font fute uthe */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/20 lg:bg-gradient-to-r lg:from-black/90 lg:via-black/30 lg:to-transparent flex items-end lg:items-center">
                                 
                                 <div className="w-full container mx-auto px-6 md:px-12 lg:px-24 pb-12 lg:pb-0">
                                     <div className="max-w-4xl space-y-4 lg:space-y-8">
                                         
-                                        {/* Tag with Glow Effect */}
+                                        {/* Tag */}
                                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 backdrop-blur-md border border-primary/20">
                                             <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                                             <span className="text-white font-bold tracking-[0.15em] text-[10px] lg:text-xs uppercase">
@@ -62,7 +61,7 @@ const Banner = () => {
                                             </span>
                                         </div>
 
-                                        {/* Responsive Typography */}
+                                        {/* Title */}
                                         <h1 className="text-4xl md:text-6xl lg:text-8xl font-black text-white leading-[1.1] tracking-tight">
                                             {slide.title.split(' ')[0]} <br className="hidden lg:block" />
                                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
@@ -70,17 +69,18 @@ const Banner = () => {
                                             </span>
                                         </h1>
 
+                                        {/* Desc */}
                                         <p className="text-gray-300 text-sm md:text-lg lg:text-2xl max-w-2xl font-medium leading-relaxed opacity-90">
                                             {slide.desc}
                                         </p>
 
-                                        {/* Button Group - Mobile-e stack hobe, tablet up-e row */}
-                                        <div className="flex flex-col sm:flex-row gap-4 pt-4 lg:pt-6">
-                                            <button className="w-full sm:w-auto px-8 py-4 bg-primary text-white font-extrabold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/30">
+                                        {/* Corrected Button Group: Always side-by-side (pasapasi) */}
+                                        <div className="flex flex-row gap-3 md:gap-5 pt-4 lg:pt-6">
+                                            <button className="flex-1 sm:flex-none px-4 md:px-10 py-3 md:py-4 bg-primary text-white text-xs md:text-base font-extrabold rounded-xl md:rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/30">
                                                 Enroll Now
                                             </button>
                                             
-                                            <button className="w-full sm:w-auto px-8 py-4 border-2 border-white/20 text-white font-bold rounded-2xl backdrop-blur-md hover:bg-white hover:text-black transition-all">
+                                            <button className="flex-1 sm:flex-none px-4 md:px-10 py-3 md:py-4 border-2 border-white/20 text-white text-xs md:text-base font-bold rounded-xl md:rounded-2xl backdrop-blur-md hover:bg-white hover:text-black transition-all">
                                                 View Details
                                             </button>
                                         </div>
@@ -92,9 +92,7 @@ const Banner = () => {
                 ))}
             </Swiper>
 
-            {/* Premium CSS Overrides */}
             <style jsx="true">{`
-                /* Hide Navigation Arrows on Mobile */
                 @media (max-width: 768px) {
                     .swiper-button-next, .swiper-button-prev {
                         display: none !important;
