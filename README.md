@@ -11,12 +11,12 @@ admin password : Admin@
 2. Course Enrollment and Dashboard
 3. Course Creation and Approval
 4. Assignment Management
-5. Admin Control Panel
+5. Admin Control pannel
 6. Student Feedback and Reviews
 7. Payment Integration
 8. Notifications and Alerts
-9. Interactive Learning Tools
-10. Analytics and Reporting 
+9. Interactive Learning tools
+
 
 
 # React + Vite
@@ -26,4 +26,6 @@ This template provides a minimal setup to get React working in Vite with HMR and
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/)
+- test Pair Extraordinaire
+
