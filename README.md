@@ -15,7 +15,7 @@ admin password : Admin@
 6. Student Feedback and Reviews
 7. Payment Integration
 8. Notifications and Alerts
-9. Interactive Learning tools
+9. Interactive Learning tools 
 
 
 
