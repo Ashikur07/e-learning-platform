@@ -3,19 +3,19 @@ import { useQuery } from "@tanstack/react-query";
 import Heading from "../../../../components/Heading/Heading";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
+import { FaCheck, FaTimes, FaChartLine } from "react-icons/fa";
 
 const AllClass = () => {
-
     useEffect(() => {
         document.title = 'Dashboard | All Classes';
     }, []);
-
 
     const axiosSecure = useAxiosSecure();
     const [page, setPage] = useState(1);
     const limit = 10;
 
-    const { data: classes = [], refetch } = useQuery({
+    const { data: classes = [], refetch, isLoading } = useQuery({
         queryKey: ['classes'],
         queryFn: async () => {
             const res = await axiosSecure.get('/classes');
@@ -23,18 +23,15 @@ const AllClass = () => {
         }
     });
 
-    const total = classes.length;
-    const totalPages = Math.ceil(total / limit);
+    const totalPages = Math.ceil(classes.length / limit);
+    const currentData = classes.slice((page - 1) * limit, page * limit);
 
     const handleApproves = id => {
         axiosSecure.patch(`/classes/${id}`, { status: 'accepted', enrolment: 0, assignmentSubmited: 0 })
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                    Swal.fire({
-                        title: "Successfully approved..!",
-                        icon: "success"
-                    });
+                    Swal.fire({ title: "Approved!", icon: "success", timer: 1500, showConfirmButton: false });
                 }
             });
     };
@@ -44,112 +41,125 @@ const AllClass = () => {
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                    Swal.fire({
-                        title: "Request rejected..!",
-                        icon: "error"
-                    });
+                    Swal.fire({ title: "Rejected!", icon: "error", timer: 1500, showConfirmButton: false });
                 }
             });
     };
 
-    const currentData = classes.slice((page - 1) * limit, page * limit);
-
     return (
-        <div className="mb-24">
-            <Heading title="All Classes"></Heading>
-
-            <div className="mb-8 overflow-x-auto max-w-6xl mx-auto border-2 shadow-2xl mt-10">
-                <table className="table">
-                    <thead className="bg-[#FB923C] text-xl text-black">
-                        <tr>
-                            <th></th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Email</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentData.map(clas => (
-                            <tr key={clas._id} className="text-base">
-                                <td></td>
-                                <td>
-                                    <div className="avatar">
-                                        <div className="mask mask-squircle w-20 h-20">
-                                            <img src={clas.image} alt="Avatar" />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="max-w-40">{clas.title}</td>
-                                <td className="max-w-56">{clas.description}</td>
-                                <td>{clas.email}</td>
-                                <td>
-                                    <div className="space-x-2">
-                                        {clas.status === 'accepted' ? (
-                                            <button className="p-2 rounded-md bg-slate-300 font-semibold text-white" disabled>
-                                                already approves
-                                            </button>
-                                        ) : clas.status === 'rejected' ? (
-                                            <button className="p-2 rounded-md bg-slate-300 font-semibold text-white" disabled>
-                                                approves
-                                            </button>
-                                        ) : (
-                                            <button onClick={() => handleApproves(clas._id)} className="p-2 rounded-md bg-green-600 font-semibold text-white">
-                                                approves
-                                            </button>
-                                        )}
-
-                                        {clas.status === 'accepted' ? (
-                                            <button className="p-2 px-5 text-white font-semibold bg-slate-300 rounded-md" disabled>
-                                                reject
-                                            </button>
-                                        ) : clas.status === 'rejected' ? (
-                                            <button className="p-2 px-5 text-white font-semibold bg-slate-300 rounded-md" disabled>
-                                                already reject
-                                            </button>
-                                        ) : (
-                                            <button onClick={() => handleRejected(clas._id)} className="p-2 px-5 text-white font-semibold bg-orange-500 rounded-md">
-                                                reject
-                                            </button>
-                                        )}
-
-                                        <button className="p-2 px-5 text-white font-semibold bg-orange-500 rounded-md">See Progress</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+        <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="pb-24 px-4 lg:px-8 bg-base-100 min-h-screen"
+        >
+            <div className="pt-8">
+                <Heading title="Course Management" subtitle="Approve or reject instructor class requests" />
             </div>
 
-            {/* Pagination Controls */}
-            <div className="flex justify-center mt-5">
+            {/* Table Container */}
+            <div className="mt-10 overflow-hidden rounded-[2rem] border border-base-300 bg-base-100 shadow-xl">
+                <div className="overflow-x-auto">
+                    <table className="table w-full">
+                        {/* head */}
+                        <thead className="bg-base-200 text-base-content/70">
+                            <tr className="border-b border-base-300">
+                                <th className="py-5 pl-8">Course Info</th>
+                                <th>Instructor</th>
+                                <th>Status</th>
+                                <th className="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="text-base-content/80">
+                            {currentData.map((clas) => (
+                                <tr key={clas._id} className="hover:bg-base-200/50 transition-colors border-b border-base-300/50">
+                                    <td className="py-4 pl-8">
+                                        <div className="flex items-center gap-4">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle w-16 h-16 shadow-md">
+                                                    <img src={clas.image} alt="Course" />
+                                                </div>
+                                            </div>
+                                            <div className="max-w-[250px]">
+                                                <div className="font-black text-slate-900 dark:text-white truncate">{clas.title}</div>
+                                                <div className="text-xs opacity-50 line-clamp-1">{clas.description}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="font-bold text-sm">{clas.email}</div>
+                                        <div className="text-[10px] uppercase font-bold text-primary italic">Instructor Email</div>
+                                    </td>
+                                    <td>
+                                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${
+                                            clas.status === 'accepted' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
+                                            clas.status === 'rejected' ? 'bg-rose-500/10 text-rose-500 border-rose-500/20' :
+                                            'bg-amber-500/10 text-amber-500 border-amber-500/20'
+                                        }`}>
+                                            {clas.status}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div className="flex justify-center items-center gap-2">
+                                            {/* Approve Button */}
+                                            <button 
+                                                onClick={() => handleApproves(clas._id)}
+                                                disabled={clas.status === 'accepted' || clas.status === 'rejected'}
+                                                className={`btn btn-sm btn-circle ${clas.status === 'accepted' ? 'btn-disabled opacity-30' : 'btn-success text-white shadow-lg shadow-emerald-500/20'}`}
+                                                title="Approve"
+                                            >
+                                                <FaCheck size={12} />
+                                            </button>
+
+                                            {/* Reject Button */}
+                                            <button 
+                                                onClick={() => handleRejected(clas._id)}
+                                                disabled={clas.status === 'accepted' || clas.status === 'rejected'}
+                                                className={`btn btn-sm btn-circle ${clas.status === 'rejected' ? 'btn-disabled opacity-30' : 'btn-error text-white shadow-lg shadow-rose-500/20'}`}
+                                                title="Reject"
+                                            >
+                                                <FaTimes size={12} />
+                                            </button>
+
+                                            {/* Progress Button */}
+                                            <button className="btn btn-sm px-4 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 border-none shadow-lg shadow-indigo-500/20 gap-2 text-[10px] uppercase font-bold">
+                                                <FaChartLine /> Progress
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {/* Modern Pagination */}
+            <div className="flex justify-center items-center gap-3 mt-12">
                 <button
                     onClick={() => setPage(prev => Math.max(prev - 1, 1))}
-                    className="mx-1 px-3 py-1 rounded bg-gray-200"
+                    className="btn btn-circle btn-ghost border border-base-300 bg-base-100 hover:bg-primary hover:text-white transition-all disabled:opacity-30"
                     disabled={page === 1}
-                >
-                    &lt; Previous
-                </button>
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNumber => (
-                    <button
-                        key={pageNumber}
-                        onClick={() => setPage(pageNumber)}
-                        className={`mx-1 px-3 py-1 rounded ${pageNumber === page ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
-                    >
-                        {pageNumber}
-                    </button>
-                ))}
+                > &larr; </button>
+
+                <div className="flex gap-2 bg-base-200 p-1.5 rounded-full border border-base-300 shadow-inner">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNumber => (
+                        <button
+                            key={pageNumber}
+                            onClick={() => setPage(pageNumber)}
+                            className={`w-10 h-10 rounded-full font-black text-xs transition-all ${pageNumber === page ? 'bg-primary text-white shadow-md scale-110' : 'hover:bg-base-300'}`}
+                        >
+                            {pageNumber}
+                        </button>
+                    ))}
+                </div>
+
                 <button
                     onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
-                    className="mx-1 px-3 py-1 rounded bg-gray-200"
+                    className="btn btn-circle btn-ghost border border-base-300 bg-base-100 hover:bg-primary hover:text-white transition-all disabled:opacity-30"
                     disabled={page === totalPages}
-                >
-                    Next &gt;
-                </button>
+                > &rarr; </button>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
