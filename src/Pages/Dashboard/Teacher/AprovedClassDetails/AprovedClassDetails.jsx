@@ -1,33 +1,33 @@
 import { useLoaderData } from "react-router-dom";
 import Heading from "../../../../components/Heading/Heading";
-import { FaPlus, FaUserCheck, FaUsers } from "react-icons/fa";
+import { FaPlus, FaUserCheck, FaUsers, FaChartLine } from "react-icons/fa";
 import { IoBookmarksSharp } from "react-icons/io5";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 const AprovedClassDetails = () => {
-
     const aprovedClass = useLoaderData();
-    console.log(aprovedClass);
     const axiosSecure = useAxiosSecure();
-   
+    const currentTheme = localStorage.getItem("theme") || "light";
+
+    useEffect(() => {
+        document.title = `Instructor | ${aprovedClass.title}`;
+    }, [aprovedClass.title]);
+
     const { data: assignment = [], refetch } = useQuery({
-        queryKey: ['assignment'],
+        queryKey: ['assignment', aprovedClass._id],
         queryFn: async () => {
             const res = await axiosSecure.get(`assignments?classId=${aprovedClass._id}`);
             return res.data;
         }
-    })
-    console.log(assignment);
+    });
 
-    // console.log(assignment);
+    const handleAddAssignment = () => document.getElementById('my_modal_1').showModal();
 
-
-    const handleAddAssignment = () =>{
-        document.getElementById('my_modal_1').showModal();
-    }
-
-    const handleSubmit = event =>{
+    const handleSubmit = event => {
         event.preventDefault();
         const form = event.target;
         const title = form.title.value;
@@ -35,86 +35,94 @@ const AprovedClassDetails = () => {
         const description = form.description.value;
         const classId = aprovedClass._id;
 
-        console.log(title, deadline, description, classId);
-        const assignmentInfo = {title, deadline, description, classId};
+        const assignmentInfo = { title, deadline, description, classId };
 
         axiosSecure.post('/assignments', assignmentInfo)
-        .then(res =>{
-            refetch();
-            console.log(res.data);
-            alert('successfully added to the database');
-            form.reset();                                                                                                                                                                                                    
-        })
+            .then(res => {
+                if (res.data.insertedId) {
+                    refetch();
+                    document.getElementById('my_modal_1').close();
+                    Swal.fire({
+                        title: "Created!",
+                        icon: "success",
+                        background: currentTheme === 'dark' ? '#0f172a' : '#ffffff',
+                        color: currentTheme === 'dark' ? '#f8fafc' : '#0f172a',
+                    });
+                    form.reset();
+                }
+            });
     }
 
-
     return (
-        <div>
-            <Heading title='Course Details'></Heading>
+        <div className="pb-24 px-4 lg:px-8 bg-base-100 min-h-screen">
+            <Heading title="Class Progress" subtitle="Live tracking of your course engagement" />
 
-            <div className="my-5 lg:my-10">
-                <h1 className="mb-5 text-center text-orange-500 text-4xl font-semibold">Class Progress</h1>
-
-                <div className="relative flex justify-center pt-14 lg:pt-0 pb-10 lg:pb-0 max-w-5xl mx-auto bg-orange-400 lg:h-96">
-
-                    <button onClick={handleAddAssignment} className="top-1 lg:m-3 hover:bg-green-900 text-lg absolute right-0 btn bg-green-700 border-none text-white"><FaPlus className="text-xl"></FaPlus> Create</button>
-
-                    <div className="items-center flex flex-col lg:flex-row justify-center gap-6">
-                        <div className="py-6 px-10 bg-white text-center flex flex-col items-center gap-3 rounded-xl">
-                            <FaUsers className="text-4xl text-blue-700"></FaUsers>
-                            <p className="text-4xl font-bold">{aprovedClass.enrolment}</p>
-                            <h1 className="text-3xl">Total <br /> Enrollment</h1>
+            <div className="max-w-5xl mx-auto mt-8">
+                {/* Compact Analytics Banner */}
+                <div className="bg-gradient-to-r from-indigo-600 to-purple-700 rounded-[2.5rem] p-8 lg:p-12 shadow-2xl border border-white/10">
+                    
+                    {/* Compact Header */}
+                    <div className="flex justify-between items-center mb-10 px-2">
+                        <div className="flex items-center gap-3">
+                            <FaChartLine className="text-white text-xl" />
+                            <h2 className="text-xl lg:text-2xl font-black text-white uppercase tracking-tighter">Live Analytics</h2>
                         </div>
-
-                        <div className="py-6 px-10 bg-white text-center flex flex-col items-center gap-3 rounded-xl">
-                            <IoBookmarksSharp className="text-4xl text-blue-700" />
-                            <p className="text-4xl font-bold">{assignment?.length}</p>
-                            <h1 className="text-3xl">Total <br /> Assignment</h1>
-                        </div>
-
-                        <div className="py-6 px-10 bg-white text-center flex flex-col items-center gap-3 rounded-xl">
-                            <FaUserCheck className="text-4xl text-blue-700"></FaUserCheck>
-                            <p className="text-4xl font-bold">{aprovedClass?.assignmentSubmited}</p>
-                            <h1 className="text-3xl">Today <br /> Submitted</h1>
-                        </div>
+                        <button 
+                            onClick={handleAddAssignment} 
+                            className="btn btn-sm lg:btn-md bg-white/20 hover:bg-white/30 border-none text-white rounded-xl px-5 font-black uppercase text-[10px] tracking-widest shadow-lg"
+                        >
+                            <FaPlus className="mr-2" /> Create
+                        </button>
                     </div>
 
+                    {/* Smaller, Balanced Stat Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <CompactStatBox icon={<FaUsers />} value={aprovedClass.enrolment} label="Enrollment" />
+                        <CompactStatBox icon={<IoBookmarksSharp />} value={assignment?.length} label="Assignments" />
+                        <CompactStatBox icon={<FaUserCheck />} value={aprovedClass?.assignmentSubmited || 0} label="Submissions" />
+                    </div>
                 </div>
-
             </div>
 
-             {/* apply now with model  */}
-             <dialog id="my_modal_1" className="modal">
-                    <div className="modal-box bg-slate-200">
-                        <h3 className="text-center font-bold text-3xl">Create a new Assignment</h3>
-
-                        <form onSubmit={handleSubmit} className="lg:ml-16 my-8 max-w-xs ">
-                            <p className="text-xl font-bold pb-2">Assignment Title</p>
-                            <input type="text" name='title' placeholder="Enter assignment title" className="input input-bordered input-accent w-full max-w-xs mb-4" required />
-
-                            <p className="pt-2 text-xl font-bold pb-2">Assignment Deadline</p>
-                            <input type="date" name='deadline' className="input input-bordered input-accent w-full max-w-xs mb-4" required />
-
-                            <p className="pt-2 text-xl font-bold pb-2">Assignment Description</p>
-                            <textarea name='description' placeholder="Write here" className="textarea textarea-bordered textarea-md w-full max-w-xs"  required></textarea>
-
-
-                            <input type='submit' className="mt-3 btn w-full btn-warning font-semibold text-lg" value='Submit' />
-
-                        </form>
-
-                        <div className=" modal-action">
-                            <form method="dialog">
-                                {/* if there is a button in form, it will close the modal */}
-                                <button className="btn btn-accent px-5 font-bold">Close</button>
-                            </form>
+            {/* Assignment Modal */}
+            <dialog id="my_modal_1" className="modal backdrop-blur-sm">
+                <div className="modal-box bg-base-100 rounded-[2.5rem] border border-base-300 p-8 max-w-md shadow-2xl">
+                    <h3 className="text-2xl font-black uppercase tracking-tighter text-center mb-6 text-base-content">New Assignment</h3>
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div className="form-control">
+                            <label className="label-text font-black uppercase text-[10px] opacity-40 mb-1">Title</label>
+                            <input name='title' className="input input-bordered rounded-xl bg-base-200 border-none font-bold" required />
                         </div>
+                        <div className="form-control">
+                            <label className="label-text font-black uppercase text-[10px] opacity-40 mb-1">Deadline</label>
+                            <input type="date" name='deadline' className="input input-bordered rounded-xl bg-base-200 border-none font-bold" required />
+                        </div>
+                        <div className="form-control">
+                            <label className="label-text font-black uppercase text-[10px] opacity-40 mb-1">Description</label>
+                            <textarea name='description' className="textarea rounded-xl bg-base-200 border-none font-medium h-24" required></textarea>
+                        </div>
+                        <button className="btn btn-primary w-full rounded-xl font-black uppercase tracking-widest shadow-lg">Submit Task</button>
+                    </form>
+                    <div className="modal-action absolute top-0 right-5">
+                        <form method="dialog"><button className="btn btn-sm btn-circle btn-ghost">✕</button></form>
                     </div>
-                </dialog>
-
-
+                </div>
+            </dialog>
         </div>
     );
 };
+
+// Compact Internal Component
+const CompactStatBox = ({ icon, value, label }) => (
+    <div className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-[2rem] flex items-center justify-between group transition-all hover:bg-white/20">
+        <div className="text-left">
+            <p className="text-3xl font-black text-white tracking-tighter">{value}</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-white/60">{label}</p>
+        </div>
+        <div className="p-3 bg-white/20 rounded-xl text-white group-hover:rotate-12 transition-transform shadow-inner">
+            {icon}
+        </div>
+    </div>
+);
 
 export default AprovedClassDetails;
