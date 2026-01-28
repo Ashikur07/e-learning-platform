@@ -6,10 +6,11 @@ const ClassCard = ({ clas, index }) => {
     return (
         <motion.div 
             layout
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-            transition={{ duration: 0.4, delay: index * 0.05 }}
+            // Lomba stretch animation ta bad diye sudhu fade ebong halka move add kora holo
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.5, delay: (index % 6) * 0.1, ease: "easeOut" }}
             whileHover={{ y: -10 }}
             className="group bg-base-100 rounded-[2.5rem] p-4 border border-base-200 hover:border-primary/30 transition-all duration-500 shadow-sm hover:shadow-2xl flex flex-col h-full"
         >
