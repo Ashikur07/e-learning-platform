@@ -1,49 +1,78 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
+import { FaEdit, FaTrashAlt, FaInfoCircle } from "react-icons/fa";
 
 const MyCourseCard = ({ clas, handleDelete }) => {
     const { user } = useAuth();
 
     return (
-        <div >
-            <div className="shadow-2xl rounded-xl h-full flex flex-col">
-                <img className="w-full h-52 rounded-t-xl" src={clas.image} alt="" />
+        <div className="h-full group">
+            <div className="bg-base-100 rounded-[2.5rem] overflow-hidden border border-base-300 shadow-xl h-full flex flex-col transition-all duration-500 hover:shadow-2xl hover:border-primary/30">
+                
+                {/* Thumbnail & Status Overlay */}
+                <div className="relative h-52 overflow-hidden">
+                    <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={clas.image} alt={clas.title} />
+                    <div className="absolute top-4 right-4 flex flex-col gap-2">
+                        <span className={`px-4 py-1.5 rounded-2xl text-[10px] font-black uppercase tracking-widest border shadow-lg backdrop-blur-md ${
+                            clas.status === 'accepted' ? 'bg-emerald-500/80 text-white border-emerald-400' :
+                            clas.status === 'rejected' ? 'bg-rose-500/80 text-white border-rose-400' :
+                            'bg-amber-500/80 text-white border-amber-400'
+                        }`}>
+                            {clas.status}
+                        </span>
+                        <span className="bg-base-100/90 text-primary px-3 py-1 rounded-xl text-xs font-black shadow-md border border-base-300">
+                            ${clas.price}
+                        </span>
+                    </div>
+                </div>
 
-                <div className="p-6 border-2 flex-grow flex flex-col justify-between">
-
+                {/* Content Section */}
+                <div className="p-7 flex-grow flex flex-col justify-between">
                     <div>
-                        <div className="flex items-center justify-between">
-                            <p className="text-lg text-[#d66e3e] font-extrabold">Price: ${clas.price}</p>
-                            <p className="py-1 px-2 rounded-xl bg-yellow-700 font-semibold text-white">{clas.status}</p>
-                        </div>
-
-                        <div>
-                            <h1 className="text-lg py-2 font-bold">{clas.title}</h1>
-                            <p className="">{clas.description}</p>
+                        <h1 className="text-xl font-black text-base-content leading-tight tracking-tighter uppercase group-hover:text-primary transition-colors line-clamp-2 mb-3">
+                            {clas.title}
+                        </h1>
+                        <p className="text-xs opacity-50 font-medium line-clamp-3 leading-relaxed mb-6">
+                            {clas.description}
+                        </p>
+                        
+                        {/* Instructor Info */}
+                        <div className="flex items-center gap-3 p-3 bg-base-200 rounded-2xl mb-8">
+                            <img className="rounded-xl w-10 h-10 object-cover border border-base-300 shadow-sm" src={user?.photoURL} alt="Instructor" />
+                            <div className="overflow-hidden">
+                                <p className="text-[10px] font-black uppercase text-primary truncate tracking-wider">{clas.name}</p>
+                                <p className="text-[9px] opacity-40 truncate">{clas.email}</p>
+                            </div>
                         </div>
                     </div>
 
+                    {/* Action Buttons */}
+                    <div className="grid grid-cols-3 gap-2 pt-4 border-t border-base-300/50">
+                        <button 
+                            onClick={() => handleDelete(clas._id)} 
+                            className="btn btn-sm h-10 rounded-xl bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white border-none transition-all flex items-center justify-center gap-1 text-[10px] font-black uppercase"
+                        >
+                            <FaTrashAlt /> Del
+                        </button>
+                        
+                        <Link 
+                            to={`/dashboard/update/${clas._id}`} 
+                            className="btn btn-sm h-10 rounded-xl bg-indigo-500/10 text-indigo-500 hover:bg-indigo-500 hover:text-white border-none transition-all flex items-center justify-center gap-1 text-[10px] font-black uppercase"
+                        >
+                            <FaEdit /> Edit
+                        </Link>
 
-                    <div className="space-y-8 mt-5">
-                        <div className="flex gap-4 font-semibold">
-                            <img className="rounded-full w-14" src={user?.photoURL} alt="" />
-                            <div>
-                                <p className="">{clas.name}</p>
-                                <p className="">{clas.email}</p>
-                            </div>
-                        </div>
-                        <div className="flex justify-between">
-                            <button onClick={() => handleDelete(clas._id)} className="bg-orange-600 py-1 px-3 text-white rounded-md">Delete</button>
-                            <Link to={`/dashboard/update/${clas._id}`} className="bg-green-600 py-1 px-3 text-white rounded-md">Update</Link>
-
-                            {
-                                clas?.status === 'accepted' ?
-                                    <Link to={`/dashboard/details/${clas._id}`}><button className="bg-cyan-800 py-1 px-3 text-white rounded-md">Details</button></Link> :
-                                    <button className="bg-slate-200 py-1 px-3 text-white rounded-md" disabled>Details</button>
-
-                            }
-
-                        </div>
+                        {clas?.status === 'accepted' ? (
+                            <Link to={`/dashboard/details/${clas._id}`} className="w-full">
+                                <button className="btn btn-sm h-10 w-full rounded-xl bg-emerald-500/10 text-emerald-600 hover:bg-emerald-600 hover:text-white border-none transition-all flex items-center justify-center gap-1 text-[10px] font-black uppercase">
+                                    <FaInfoCircle /> Info
+                                </button>
+                            </Link>
+                        ) : (
+                            <button className="btn btn-sm h-10 rounded-xl bg-base-300 text-base-content/20 border-none cursor-not-allowed text-[10px] font-black uppercase" disabled>
+                                Info
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
