@@ -9,7 +9,7 @@ const AllClasses = () => {
 
     const [classes, setClasses] = useState([]);
     const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(true); // Loading state added
+    const [loading, setLoading] = useState(true);
     const limit = 6; 
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const AllClasses = () => {
         axios(`${import.meta.env.VITE_API_URL}/classes`)
             .then(res => {
                 setClasses(res.data);
-                setLoading(false); // Data load shesh
+                setLoading(false);
             })
             .catch(() => setLoading(false));
     }, []);
@@ -26,9 +26,9 @@ const AllClasses = () => {
     const totalPages = Math.ceil(adminAproveClasses.length / limit);
     const currentData = adminAproveClasses.slice((page - 1) * limit, page * limit);
 
-    // Card Skeleton UI
+    // Dynamic Skeleton for Dark/Light Mode
     const CardSkeleton = () => (
-        <div className="bg-base-200/50 rounded-[2.5rem] p-4 border border-base-200 animate-pulse h-[500px]">
+        <div className="bg-base-200 rounded-[2.5rem] p-4 border border-base-300 animate-pulse h-[500px]">
             <div className="bg-base-300 rounded-[2rem] h-56 w-full"></div>
             <div className="p-4 space-y-4">
                 <div className="h-4 bg-base-300 rounded w-1/3"></div>
@@ -41,50 +41,48 @@ const AllClasses = () => {
     );
 
     return (
-        <div className="min-h-screen bg-white pb-28 pt-20">
+        <div className="min-h-screen bg-base-100 text-base-content pb-28 pt-20 transition-all duration-300">
             <div className="max-w-7xl mx-auto px-6 lg:px-10">
                 
-                <header className="relative mb-16 border-b border-gray-100 pb-10">
+                {/* Header Section with Adaptive Borders */}
+                <header className="relative mb-16 border-b border-base-300 pb-10">
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <motion.div 
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: false }}
                             transition={{ duration: 0.7 }}
                             className="max-w-2xl space-y-3"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="h-[2px] w-6 bg-indigo-600"></span>
-                                <span className="text-indigo-600 font-bold text-[10px] uppercase tracking-[0.3em]">
+                                <span className="h-[2px] w-6 bg-primary"></span>
+                                <span className="text-primary font-bold text-[10px] uppercase tracking-[0.3em]">
                                     Learning Catalog
                                 </span>
                             </div>
-                            <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter leading-tight uppercase">
-                                Explore <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-500">Potential</span>
+
+                            <h1 className="text-3xl md:text-5xl font-black tracking-tighter leading-tight uppercase">
+                                Explore <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-pink-500">Potential</span>
                             </h1>
-                            <p className="text-sm md:text-base text-slate-400 font-medium max-w-lg">
+
+                            <p className="text-sm md:text-base opacity-60 font-medium max-w-lg leading-relaxed">
                                 Browse through our world-class courses and embark on a transformative learning journey today.
                             </p>
                         </motion.div>
 
-                        <motion.div 
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            className="flex items-center gap-3"
-                        >
-                            <button className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all text-sm uppercase tracking-wider">
+                        <div className="flex items-center gap-3">
+                            <button className="btn btn-primary rounded-xl px-8 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
                                 All Courses
                             </button>
-                            <button className="p-3 rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100 transition-all">
-                                <HiOutlineAdjustmentsHorizontal className="w-5 h-5 text-slate-500" />
+                            <button className="btn btn-ghost btn-square rounded-xl bg-base-200 border-base-300">
+                                <HiOutlineAdjustmentsHorizontal className="w-5 h-5 opacity-60" />
                             </button>
-                        </motion.div>
+                        </div>
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+                {/* Main Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-14">
                     {loading ? (
-                        // Load hote thakle skeleton dekhabe
                         Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)
                     ) : (
                         <AnimatePresence mode="popLayout">
@@ -95,28 +93,32 @@ const AllClasses = () => {
                     )}
                 </div>
 
-                {/* Pagination (Baki code same) */}
+                {/* Adaptive Pagination */}
                 {!loading && (
                     <div className="flex justify-center items-center gap-4 mt-28">
                         <button 
                             onClick={() => {setPage(p => Math.max(p-1, 1)); window.scrollTo(0,0);}}
-                            className="w-14 h-14 rounded-full border border-slate-100 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all disabled:opacity-20"
+                            className="btn btn-circle btn-ghost border-base-300 bg-base-200 hover:bg-primary hover:text-white disabled:opacity-20"
                             disabled={page === 1}
                         > &larr; </button>
                         
-                        <div className="flex gap-3 bg-slate-50 p-2 rounded-full border border-slate-100">
+                        <div className="flex gap-2 bg-base-200 p-2 rounded-full border border-base-300 shadow-inner">
                             {[...Array(totalPages)].map((_, i) => (
                                 <button 
                                     key={i}
                                     onClick={() => {setPage(i+1); window.scrollTo(0,0);}}
-                                    className={`w-12 h-12 rounded-full font-black text-lg transition-all ${page === i+1 ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-200 scale-110' : 'hover:bg-slate-200'}`}
+                                    className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full font-black text-sm lg:text-lg transition-all ${
+                                        page === i+1 
+                                        ? 'bg-primary text-white shadow-xl shadow-primary/30 scale-110' 
+                                        : 'hover:bg-base-300 text-base-content/60'
+                                    }`}
                                 > {i+1} </button>
                             ))}
                         </div>
 
                         <button 
                             onClick={() => {setPage(p => Math.min(p+1, totalPages)); window.scrollTo(0,0);}}
-                            className="w-14 h-14 rounded-full border border-slate-100 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all disabled:opacity-20"
+                            className="btn btn-circle btn-ghost border-base-300 bg-base-200 hover:bg-primary hover:text-white disabled:opacity-20"
                             disabled={page === totalPages}
                         > &rarr; </button>
                     </div>
