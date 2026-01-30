@@ -12,7 +12,7 @@ admin password : Admin@
 3. Course Creation and Approval
 4. Assignment Management
 5. Admin Control pannel
-6. Student Feedback and Reviews
+6. Student Feedback and Reviews 
 7. Payment Integration
 8. Notifications and Alerts 
 9. Interactive Learning tools 
