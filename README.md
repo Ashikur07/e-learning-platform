@@ -8,7 +8,7 @@ admin password : Admin@
 
 # Feature and Charactristics of my website :
 1. User Authentication and Role Management
-2. Course Enrollment and Dashboard
+2. Course Enrollment and Dashboard 
 3. Course Creation and Approval 
 4. Assignment Management 
 5. Admin Control pannel 
