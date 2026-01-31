@@ -10,7 +10,7 @@ admin password : Admin@
 1. User Authentication and Role Management
 2. Course Enrollment and Dashboard
 3. Course Creation and Approval
-4. Assignment Management
+4. Assignment Management 
 5. Admin Control pannel 
 6. Student Feedback and Reviews 
 7. Payment Integration
