@@ -14,15 +14,25 @@ const Login = () => {
     }, []);
 
     const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false);
     const location = useLocation();
     const { createUserWithGoogle, signInUser } = useContext(AuthContext);
     const axiosPublic = useAxiosPublic();
     
-    // Theme sync for SweetAlert
+    // States for interaction
+    const [showPassword, setShowPassword] = useState(false);
+    const [passwordValue, setPasswordValue] = useState("");
+    const [isFocused, setIsFocused] = useState(false);
+    
     const currentTheme = localStorage.getItem("theme") || "light";
-
     const googleProvider = new GoogleAuthProvider();
+
+    // Logic for Monkey Emojis based on User Action
+    const getMonkeyEmoji = () => {
+        if (passwordValue.length > 0 && !showPassword) return "🙈"; // Hide eyes while typing
+        if (showPassword) return "🐵"; // Normal face when showing password
+        if (isFocused && passwordValue.length === 0) return "👈"; // Pointing finger when focused but empty
+        return "🐵"; // Default face
+    };
 
     const handleGoogleSignIn = () => {
         createUserWithGoogle(googleProvider)
@@ -38,7 +48,6 @@ const Login = () => {
                     .then(() => {
                         Swal.fire({
                             title: "Welcome Back!",
-                            text: "Login successful.",
                             icon: "success",
                             background: currentTheme === 'dark' ? '#1e293b' : '#ffffff',
                             color: currentTheme === 'dark' ? '#f8fafc' : '#0f172a',
@@ -79,7 +88,7 @@ const Login = () => {
             .catch(() => {
                 Swal.fire({
                     title: "Login Failed",
-                    text: "Invalid email or password.",
+                    text: "Invalid credentials.",
                     icon: "error",
                     background: currentTheme === 'dark' ? '#1e293b' : '#ffffff',
                     color: currentTheme === 'dark' ? '#f8fafc' : '#0f172a',
@@ -88,87 +97,50 @@ const Login = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-base-200 px-5 py-10 transition-colors duration-300 relative overflow-hidden">
-            {/* Background Decorative Blurs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-
+        <div className="min-h-screen flex items-center justify-center bg-base-200 px-5 py-10 transition-colors duration-300 relative">
             <motion.div 
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
                 className="max-w-[450px] w-full bg-base-100 rounded-[3rem] border border-base-300 shadow-2xl p-8 lg:p-12 relative z-10"
             >
                 {/* Brand Header */}
                 <div className="flex flex-col items-center mb-8">
-                    <motion.div 
-                        whileHover={{ rotate: 10 }}
-                        className="p-4 bg-primary rounded-[1.5rem] shadow-xl shadow-primary/30 mb-4"
-                    >
+                    <div className="p-4 bg-primary rounded-[1.5rem] shadow-xl mb-4">
                         <FaGraduationCap className="text-white text-4xl" />
-                    </motion.div>
-                    <h1 className="text-3xl font-black tracking-tighter text-base-content uppercase">LearnQuest</h1>
-                    <p className="text-[10px] opacity-40 font-black uppercase tracking-[0.3em] mt-1">LMS Platform</p>
+                    </div>
+                    <h1 className="text-3xl font-black text-base-content uppercase tracking-tighter">LearnQuest</h1>
                 </div>
 
-                {/* Google Sign In */}
-                <button 
-                    onClick={handleGoogleSignIn} 
-                    className="flex items-center justify-center gap-4 w-full py-4 px-6 rounded-2xl border border-base-300 bg-base-100 hover:bg-base-200 transition-all font-bold text-sm text-base-content shadow-sm active:scale-95 mb-8"
-                >
-                    <FcGoogle className="text-2xl" />
-                    Continue with Google
+                <button onClick={handleGoogleSignIn} className="flex items-center justify-center gap-4 w-full py-4 rounded-2xl border border-base-300 bg-base-100 hover:bg-base-200 transition-all font-bold text-base-content shadow-sm mb-8">
+                    <FcGoogle className="text-2xl" /> Continue with Google
                 </button>
 
-                <div className="flex mb-8 items-center gap-4">
-                    <div className="h-[1px] flex-1 bg-base-300"></div>
-                    <span className="text-[10px] font-black uppercase tracking-widest opacity-20 italic">Credentials</span>
-                    <div className="h-[1px] flex-1 bg-base-300"></div>
-                </div>
-
-                {/* Login Form */}
                 <form onSubmit={handleSignInWithEmail} className="space-y-6">
+                    {/* Email Field */}
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text font-black uppercase text-[10px] tracking-widest opacity-60">Email Address</span>
                         </label>
-                        <input 
-                            className="input input-bordered w-full rounded-2xl bg-base-200 border-none focus:ring-2 focus:ring-primary transition-all font-medium py-7" 
-                            type="email" 
-                            name="email" 
-                            placeholder="ashik@ict.iu" 
-                            required 
-                        />
+                        <input className="input input-bordered w-full rounded-2xl bg-base-200 border-none py-7 font-medium" type="email" name="email" placeholder="mail@example.com" required />
                     </div>
 
+                    {/* Interactive Password Field */}
                     <div className="form-control">
                         <label className="label flex justify-between items-end">
                             <span className="label-text font-black uppercase text-[10px] tracking-widest opacity-60">Password</span>
                             
-                            {/* Monkey Head Animation */}
-                            <div className="relative h-8 w-8 overflow-hidden flex items-center justify-center text-3xl">
+                            {/* Animated Monkey State Display */}
+                            <div className="relative h-10 w-10 flex items-center justify-center text-4xl">
                                 <AnimatePresence mode="wait">
-                                    {showPassword ? (
-                                        <motion.span
-                                            key="open"
-                                            initial={{ y: 20, opacity: 0 }}
-                                            animate={{ y: 0, opacity: 1 }}
-                                            exit={{ y: -20, opacity: 0 }}
-                                            className="cursor-default"
-                                        >
-                                            🐵
-                                        </motion.span>
-                                    ) : (
-                                        <motion.span
-                                            key="closed"
-                                            initial={{ y: 20, opacity: 0 }}
-                                            animate={{ y: 0, opacity: 1 }}
-                                            exit={{ y: -20, opacity: 0 }}
-                                            className="cursor-default"
-                                        >
-                                            🙈
-                                        </motion.span>
-                                    )}
+                                    <motion.span
+                                        key={getMonkeyEmoji()}
+                                        initial={{ y: 10, opacity: 0, scale: 0.5 }}
+                                        animate={{ y: 0, opacity: 1, scale: 1 }}
+                                        exit={{ y: -10, opacity: 0, scale: 0.5 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        {getMonkeyEmoji()}
+                                    </motion.span>
                                 </AnimatePresence>
                             </div>
                         </label>
@@ -179,29 +151,33 @@ const Login = () => {
                                 type={showPassword ? "text" : "password"}
                                 name="password"
                                 placeholder="••••••••"
+                                value={passwordValue}
+                                onChange={(e) => setPasswordValue(e.target.value)}
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setIsFocused(false)}
                                 required 
                             />
+                            {/* Icon inside the field */}
                             <button 
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)} 
                                 className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:bg-base-300 rounded-xl transition-all active:scale-90"
                             >
-                                <span className="text-xl grayscale hover:grayscale-0 transition-all">
-                                    {showPassword ? "🙉" : "🙈"}
+                                <span className="text-xl">
+                                    {showPassword ? "🐵" : "🙈"}
                                 </span>
                             </button>
                         </div>
                     </div>
 
-                    <button className="btn btn-primary w-full h-14 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-white mt-4 border-none">
+                    <button className="btn btn-primary w-full h-14 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 transition-all text-white mt-4 border-none">
                         Login Now
                     </button>
                 </form>
 
                 <div className="mt-10 text-center">
                     <p className="text-xs font-bold opacity-60 uppercase tracking-widest">
-                        New to LearnQuest? 
-                        <Link to='/register' className="text-primary font-black ml-2 hover:underline">Register</Link>
+                        New to platform? <Link to='/register' className="text-primary font-black ml-2 hover:underline">Register</Link>
                     </p>
                 </div>
             </motion.div>
