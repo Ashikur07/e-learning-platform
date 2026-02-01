@@ -4,16 +4,14 @@ import { GoogleAuthProvider } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { AiOutlineEye } from "react-icons/ai";
-import { FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEyeSlash, FaGraduationCap } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-
-
+import { motion } from "framer-motion";
 
 const Login = () => {
-
     useEffect(() => {
-        document.title = 'Login';
+        document.title = 'LearnQuest | Login';
     }, []);
 
     const navigate = useNavigate();
@@ -21,7 +19,9 @@ const Login = () => {
     const location = useLocation();
     const { createUserWithGoogle, signInUser } = useContext(AuthContext);
     const axiosPublic = useAxiosPublic();
-
+    
+    // Theme sync for SweetAlert
+    const currentTheme = localStorage.getItem("theme") || "light";
 
     const googleProvider = new GoogleAuthProvider();
 
@@ -36,21 +36,29 @@ const Login = () => {
                     role: "student",
                 }
                 axiosPublic.post('/users', userInfo)
-                    .then(res => {
-                        console.log(res.data);
+                    .then(() => {
                         Swal.fire({
-                            title: "Login Successfull..!",
+                            title: "Welcome Back!",
+                            text: "Login successful.",
                             icon: "success",
+                            background: currentTheme === 'dark' ? '#1e293b' : '#ffffff',
+                            color: currentTheme === 'dark' ? '#f8fafc' : '#0f172a',
                             timer: 2000,
+                            showConfirmButton: false
                         });
                         navigate(location?.state ? location.state : '/');
                     })
-
-
             })
-            .catch()
+            .catch(() => {
+                Swal.fire({
+                    title: "Error",
+                    text: "Google sign-in failed. Please try again.",
+                    icon: "error",
+                    background: currentTheme === 'dark' ? '#1e293b' : '#ffffff',
+                    color: currentTheme === 'dark' ? '#f8fafc' : '#0f172a',
+                });
+            })
     }
-
 
     const handleSignInWithEmail = e => {
         e.preventDefault();
@@ -60,72 +68,112 @@ const Login = () => {
         signInUser(email, password)
             .then(() => {
                 Swal.fire({
-                    title: "Login Successfull..!",
+                    title: "Login Successful!",
                     icon: "success",
-                    timer: 2000,
+                    background: currentTheme === 'dark' ? '#1e293b' : '#ffffff',
+                    color: currentTheme === 'dark' ? '#f8fafc' : '#0f172a',
+                    timer: 1500,
+                    showConfirmButton: false
                 });
                 navigate(location?.state ? location.state : '/');
-
             })
             .catch(() => {
-                // alert('Email or password does not match...! Plese try again')
                 Swal.fire({
-                    title: "Email or password does not match...! Plese try again",
+                    title: "Authentication Failed",
+                    text: "Invalid email or password.",
                     icon: "error",
-                    timer: 2500,
+                    background: currentTheme === 'dark' ? '#1e293b' : '#ffffff',
+                    color: currentTheme === 'dark' ? '#f8fafc' : '#0f172a',
                 });
             })
     }
 
     return (
-        <div className='bg-[#c2d0d9] px-5 lg:px-0 w-full  py-20'>
+        <div className="min-h-screen flex items-center justify-center bg-base-200 px-5 py-10 transition-colors duration-300">
+            {/* Background Decorative Circles */}
+            <div className="absolute top-10 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-10 right-10 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div className="animate__animated animate__zoomIn mx-auto lg:w-[390px] bg-white rounded-3xl px-8 pb-10">
-
-                <h1 className='text-center text-2xl font-bold py-7'>Please login</h1>
-
-                <button onClick={handleGoogleSignIn} className='border border-[#a39898] w-full p-2 gap-16 flex rounded-md'>
-                    <FcGoogle className='text-xl' />
-                    <p className='font-semibold'>
-                        Sign in with Google
-                    </p>
-                </button>
-
-                <div className='flex my-6 justify-between items-center'>
-                    <p className='flex-grow border-b border-[#a39898]'></p>
-                    <p className='px-4'>or</p>
-                    <p className='flex-grow border-b border-[#a39898]'></p>
+            <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="max-w-[450px] w-full bg-base-100 rounded-[2.5rem] border border-base-300 shadow-2xl p-8 lg:p-12 relative overflow-hidden"
+            >
+                {/* Brand Logo & Title */}
+                <div className="flex flex-col items-center mb-8">
+                    <div className="p-4 bg-primary rounded-2xl shadow-lg shadow-primary/30 mb-4">
+                        <FaGraduationCap className="text-white text-3xl" />
+                    </div>
+                    <h1 className="text-3xl font-black tracking-tighter text-base-content uppercase">LearnQuest</h1>
+                    <p className="text-xs opacity-50 font-bold uppercase tracking-[0.2em] mt-1">Sign in to your account</p>
                 </div>
 
-                <form onSubmit={handleSignInWithEmail}>
-                    <p className='pb-1'>Email Address</p>
-                    <input className='p-2 mb-2 border rounded-md w-full border-red-600' type="email" name='email' placeholder='Enter Your email' required />
+                {/* Google Sign In */}
+                <button 
+                    onClick={handleGoogleSignIn} 
+                    className="flex items-center justify-center gap-4 w-full py-3.5 px-6 rounded-2xl border border-base-300 bg-base-100 hover:bg-base-200 transition-all font-bold text-sm text-base-content shadow-sm active:scale-95"
+                >
+                    <FcGoogle className="text-2xl" />
+                    Sign in with Google
+                </button>
 
-                    <p className='pb-1'>Password</p>
-                    <div className="flex flex-col relative">
-                        <input
-                            className='p-2 border rounded-md w-full border-red-600'
-                            type={showPassword ? "text" : "password"}
-                            name="password" id="password"
-                            placeholder='Enter your Passoword' required />
-                        <span onClick={() => setShowPassword(!showPassword)} className="absolute left-[250px] lg:left-[290px] top-2 text-xl">
-                            {
-                                showPassword ? <FaRegEyeSlash /> : <AiOutlineEye />
-                            }
-                        </span>
+                <div className="flex my-8 items-center gap-4">
+                    <div className="h-[1px] flex-1 bg-base-300"></div>
+                    <span className="text-[10px] font-black uppercase tracking-widest opacity-30">or email</span>
+                    <div className="h-[1px] flex-1 bg-base-300"></div>
+                </div>
+
+                {/* Login Form */}
+                <form onSubmit={handleSignInWithEmail} className="space-y-5">
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text font-black uppercase text-[10px] tracking-widest opacity-60">Email Address</span>
+                        </label>
+                        <input 
+                            className="input input-bordered w-full rounded-2xl bg-base-200 border-none focus:ring-2 focus:ring-primary transition-all font-medium" 
+                            type="email" 
+                            name="email" 
+                            placeholder="mail@example.com" 
+                            required 
+                        />
                     </div>
 
-                    <button className='font-bold text-white w-full mt-5 p-2 rounded-md border bg-[#1c67bc]'>
-                        Login
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text font-black uppercase text-[10px] tracking-widest opacity-60">Password</span>
+                        </label>
+                        <div className="relative">
+                            <input
+                                className="input input-bordered w-full rounded-2xl bg-base-200 border-none focus:ring-2 focus:ring-primary transition-all font-medium pr-12"
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                placeholder="••••••••"
+                                required 
+                            />
+                            <button 
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)} 
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-xl opacity-40 hover:opacity-100 transition-opacity"
+                            >
+                                {showPassword ? <FaRegEyeSlash /> : <AiOutlineEye />}
+                            </button>
+                        </div>
+                    </div>
+
+                    <button className="btn btn-primary w-full h-14 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-white mt-4 border-none">
+                        Sign In
                     </button>
                 </form>
 
-                <h1 className='text-center mt-4'>Do not have an accout? <Link to='/register' className='text-[16px] font-bold'>Register</Link></h1>
-
-            </div>
-
+                <div className="mt-8 text-center">
+                    <p className="text-sm font-medium opacity-60">
+                        Don't have an account? 
+                        <Link to='/register' className="text-primary font-black ml-2 hover:underline">Register Now</Link>
+                    </p>
+                </div>
+            </motion.div>
         </div>
-
     );
 };
 
