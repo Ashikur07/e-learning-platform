@@ -1,50 +1,39 @@
-# 🎓 LearnQuest - Premium LMS Platform
+# 🎓 LearnQuest - Modern LMS Platform
 
-**LearnQuest** is a comprehensive and interactive Learning Management System designed to provide a seamless educational experience for Students, Instructors, and Administrators.
+**LearnQuest** is a premium, feature-rich Learning Management System designed to bridge the gap between Students, Instructors, and Administrators. It offers a seamless experience with modern UI/UX, interactive tools, and secure role-based access.
 
-<<<<<<< HEAD
-🔗 **[Live Website Link](https://assignment-12-by-ashik.netlify.app)**
-=======
-# Feature and Charactristics of my website :
-1. User Authentication and Role Management
-2. Course Enrollment and Dashboard 
-3. Course Creation and Approval 
-4. Assignment Management 
-5. Admin Control pannel
-6. Student Feedback and Reviews 
-7. Payment Integration 
-8. Notifications and Alerts 
-9. Interactive Learning tools
->>>>>>> 828203ea1f8f4290327fb42cfc8633fa7770c2aa
+🔗 **[Live Demo Link](https://assignment-12-by-ashik.netlify.app)**
 
 ---
 
-## 📸 Project Highlights (Recommended Screenshots)
-*To make your README stand out, add screenshots in this order:*
+## 📸 Application Previews
 
-1. **Home Page:** The overall modern look and feel of the landing page.
-2. **Interactive Login:** Showcasing the unique **Animated Monkey** password toggle.
-3. **Instructor Dashboard:** The "Live Analytics" banner and course management section.
-4. **Student Dashboard:** The enrolled classes grid and progress tracking.
+| 🏠 Landing Page Overview | 🐒 Interactive Monkey Login |
+| :---: | :---: |
+| ![Landing](https://github.com/user-attachments/assets/9958d92b-4000-4280-a76e-f3e172623e53) | ![Login](https://github.com/user-attachments/assets/2532c55b-4103-4f98-8a25-7cb8803a1ce8) |
+
+| 🎓 Student Profile & Progress | 👨‍🏫 Instructor Live Analytics |
+| :---: | :---: |
+| ![Student](https://github.com/user-attachments/assets/9cc3f388-fe31-4a12-a67e-0677dd068ba9) | ![Instructor](https://github.com/user-attachments/assets/343c98bb-05d0-41a0-b44e-3265dc0f4d16) |
 
 ---
 
 ## 🚀 Test Credentials
-Feel free to explore the administrative features using these credentials:
+Experience the full potential of the platform using these administrative credentials:
 * **Admin Email:** `admin@gmail.com`
 * **Admin Password:** `Admin@`
 
 ---
 
-## ✨ Features & Characteristics
+## ✨ Key Features & Functionalities
 
-* **User Authentication & Role Management:** Secure login and registration with distinct dashboards for Admin, Instructor, and Student roles.
-* **Interactive Monkey Login:** A playful UX feature where the monkey covers its eyes (🙈) when typing a password and peeks (🐵) when showing it.
-* **Course Approval System:** Instructors can submit courses for review, and Admins have full control to approve or reject them.
-* **Assignment Tracking:** Instructors can create assignments with deadlines, and students can submit their tasks directly through the platform.
-* **Secure Payments:** Integrated with Stripe for a smooth and secure course enrollment process.
-* **Celebration Effects:** Uses **Canvas Confetti** to celebrate successful registrations and enrollments.
-* **Premium Dashboard UI:** Modern layout with responsive design, premium pagination, and full dark/light mode support.
+* **Interactive Monkey Authentication:** A playful security experience where a monkey character reacts to user input—covering its eyes (🙈) during password entry and peeking (🐵) during visibility toggle.
+* **Role-Based Dashboards:** Specialized panels for Admins (User management), Instructors (Course creation), and Students (Enrollment tracking).
+* **Instructor Analytics:** A modern, compact dashboard for instructors to monitor course enrollment, total assignments, and submission stats at a glance.
+* **Assignment Management:** Full lifecycle management of assignments, including creation, deadlines, and student submissions.
+* **Seamless Payments:** Integrated with Stripe for secure and fast course enrollment.
+* **User Engagement:** Registration and enrollment are celebrated with a vibrant **Confetti Shower** effect for a positive user experience.
+* **Responsive & Adaptive UI:** Fully optimized for all devices with premium pagination, smooth animations, and automatic Dark/Light mode color switching.
 
 ---
 
@@ -55,14 +44,13 @@ Feel free to explore the administrative features using these credentials:
 * **Database:** MongoDB.
 * **Authentication:** Firebase Auth.
 * **Animations:** Framer Motion, Canvas Confetti.
-* **Popups:** SweetAlert2.
+* **State Management:** TanStack Query (React Query).
 
 ---
 
-## 📦 Local Setup Instructions
-
-1. **Clone the repository:** `git clone https://github.com/your-username/learnquest.git`
-2. **Install dependencies:** `npm install`
-3. **Required Packages:** Ensure you have `canvas-confetti` and `framer-motion` installed.
-4. **Environment Variables:** Create a `.env` file and add your Firebase and Stripe API keys.
-5. **Run the project:** `npm run dev`
+## 📦 Installation & Setup
+1. **Clone the repo:** `git clone https://github.com/your-username/learnquest.git`
+2. **Install:** `npm install`
+3. **Required Packages:** Make sure `canvas-confetti` and `framer-motion` are present.
+4. **Environment:** Setup your Firebase and Stripe keys in a `.env` file.
+5. **Run:** `npm run dev`
