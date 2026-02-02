@@ -2,7 +2,7 @@
 
 **LearnQuest** is a premium, feature-rich Learning Management System designed to bridge the gap between Students, Instructors, and Administrators. It offers a seamless experience with modern UI/UX, interactive tools, and secure role-based access.
 
-🔗 **[Live Demo Link](https://assignment-12-by-ashik.netlify.app)**
+🔗 **[Live Demo Link](https://e-learning-platform-bd.vercel.app)**
 
 ---
 
@@ -49,7 +49,7 @@ Experience the full potential of the platform using these administrative credent
 ---
 
 ## 📦 Installation & Setup
-1. **Clone the repo:** `git clone https://github.com/your-username/learnquest.git`
+1. **Clone the repo:** `git clone https://github.com/Ashikur07/e-learning-platform.git`
 2. **Install:** `npm install`
 3. **Required Packages:** Make sure `canvas-confetti` and `framer-motion` are present.
 4. **Environment:** Setup your Firebase and Stripe keys in a `.env` file.
