@@ -2,7 +2,20 @@
 
 **LearnQuest** is a comprehensive and interactive Learning Management System designed to provide a seamless educational experience for Students, Instructors, and Administrators.
 
+<<<<<<< HEAD
 🔗 **[Live Website Link](https://assignment-12-by-ashik.netlify.app)**
+=======
+# Feature and Charactristics of my website :
+1. User Authentication and Role Management
+2. Course Enrollment and Dashboard 
+3. Course Creation and Approval 
+4. Assignment Management 
+5. Admin Control pannel
+6. Student Feedback and Reviews 
+7. Payment Integration 
+8. Notifications and Alerts 
+9. Interactive Learning tools
+>>>>>>> 828203ea1f8f4290327fb42cfc8633fa7770c2aa
 
 ---
 
