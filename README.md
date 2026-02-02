@@ -2,8 +2,7 @@
 
 **LearnQuest** is a premium, feature-rich Learning Management System designed to bridge the gap between Students, Instructors, and Administrators. It offers a seamless experience with modern UI/UX, interactive tools, and secure role-based access.
 
-🔗 **[Live Demo Link](https://e-learning-platform-bd.vercel.app)** <br />
-💻 **[Backend Repository Link](https://github.com/Ashikur07/e-learning-platform-backend)**
+🔗 **[Live Demo Link](https://e-learning-platform-bd.vercel.app)**
 
 ---
 
@@ -29,23 +28,23 @@ Experience the full potential of the platform using these administrative credent
 ## ✨ Key Features & Functionalities
 
 * **Interactive Monkey Authentication:** A playful security experience where a monkey character reacts to user input—covering its eyes (🙈) during password entry and peeking (🐵) during visibility toggle.
-* **Role-Based Dashboards:** Specialized panels for Admins (User management), Instructors (Course creation), and Students (Enrollment tracking).
-* **Instructor Analytics:** A modern, compact dashboard for instructors to monitor course enrollment, total assignments, and submission stats at a glance.
-* **Assignment Management:** Full lifecycle management of assignments, including creation, deadlines, and student submissions.
+* **Role-Based Dashboards:** Specialized panels for Admins, Instructors, and Students with unique access controls.
+* **Instructor Analytics:** A modern, compact dashboard for instructors to monitor course enrollment and assignment submission stats at a glance.
+* **Assignment Management:** Full lifecycle management including creation, deadlines, and student submissions.
 * **Seamless Payments:** Integrated with Stripe for secure and fast course enrollment.
-* **User Engagement:** Registration and enrollment are celebrated with a vibrant **Confetti Shower** effect for a positive user experience.
-* **Responsive & Adaptive UI:** Fully optimized for all devices with premium pagination, smooth animations, and automatic Dark/Light mode color switching.
+* **User Engagement:** Actions like registration are celebrated with a vibrant **Confetti Shower** effect.
+* **Responsive & Adaptive UI:** Fully optimized with premium pagination, smooth animations, and automatic Dark/Light mode color switching.
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Technical Specifications
 
 * **Frontend:** React.js, Vite, Tailwind CSS, DaisyUI.
 * **Backend:** Node.js, Express.js.
 * **Database:** MongoDB.
-* **Authentication:** Firebase Auth.
-* **Animations:** Framer Motion, Canvas Confetti.
+* **Server Repository:** 💻 **[Backend Link](https://github.com/Ashikur07/e-learning-platform-backend)**
 * **State Management:** TanStack Query (React Query).
+* **Animations:** Framer Motion, Canvas Confetti.
 
 ---
 
