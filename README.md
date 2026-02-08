@@ -53,4 +53,4 @@ Experience the full potential of the platform using these administrative credent
 2. **Install:** `npm install`
 3. **Required Packages:** Make sure `canvas-confetti` and `framer-motion` are present.
 4. **Environment:** Setup your Firebase and Stripe keys in a `.env` file.
-5. **Run:** `npm run dev`
+5. **Run:** `npm run dev` 
